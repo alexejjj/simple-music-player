@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollBar?>
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TreeView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="1100.0" style="-fx-background-color: #000;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.musicplayer.HelloController">
+   <children>
+      <AnchorPane layoutX="-13.0" layoutY="35.0" prefHeight="519.0" prefWidth="249.0" style="-fx-background-color: #696969;">
+         <children>
+            <ButtonBar layoutX="-90.0" layoutY="137.0" prefHeight="0.0" prefWidth="205.0" />
+            <Button alignment="CENTER" layoutX="33.0" layoutY="190.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="180.0" text="Playlists">
+               <graphic>
+                  <FontAwesomeIconView glyphName="LIST" />
+               </graphic>
+            </Button>
+            <Button alignment="CENTER" layoutX="34.0" layoutY="132.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="180.0" text="Video">
+               <graphic>
+                  <FontAwesomeIconView text="" />
+               </graphic>
+            </Button>
+            <Button alignment="CENTER" layoutX="34.0" layoutY="73.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="180.0" text="Music ">
+               <graphic>
+                  <FontAwesomeIconView text="" />
+               </graphic>
+            </Button>
+         </children>
+      </AnchorPane>
+      <Label layoutX="7.0" layoutY="5.0" text="BDC-player" textFill="WHITE">
+         <font>
+            <Font name="System Italic" size="15.0" />
+         </font>
+      </Label>
+      <Pane layoutX="236.0" layoutY="35.0" prefHeight="34.0" prefWidth="864.0" style="-fx-background-color: #fafafa;">
+         <children>
+            <TextField layoutX="3.0" layoutY="4.0" prefHeight="26.0" prefWidth="371.0" promptText="Search" />
+            <ChoiceBox fx:id="myChoiceBox" layoutX="629.0" layoutY="4.0" prefWidth="150.0" />
+            <FontAwesomeIconView glyphName="SEARCH" layoutX="356.0" layoutY="22.0" wrappingWidth="12.07464599609375" />
+            <Label layoutX="576.0" layoutY="8.0" prefHeight="18.0" prefWidth="49.0" text="filter by:">
+               <font>
+                  <Font name="System Italic" size="14.0" />
+               </font>
+            </Label>
+            <FontAwesomeIconView glyphName="SEARCH" layoutX="560.0" layoutY="22.0" size="14" text="" wrappingWidth="12.07464599609375" />
+            <FontAwesomeIconView glyphName="PLUS" layoutX="793.0" layoutY="26.0" size="25" />
+            <FontAwesomeIconView glyphName="TRASH" layoutX="825.0" layoutY="25.0" size="25" />
+         </children>
+      </Pane>
+      <Pane layoutX="237.0" layoutY="74.0" prefHeight="417.0" prefWidth="863.0" style="-fx-background-color: #000;">
+         <children>
+            <TreeView fx:id="treeView" layoutX="-1.0" layoutY="-6.0" onContextMenuRequested="#selectItem" onMouseClicked="#selectItem" prefHeight="423.0" prefWidth="864.0" />
+            <ScrollBar layoutX="846.0" layoutY="2.0" orientation="VERTICAL" prefHeight="407.0" prefWidth="16.0" />
+         </children>
+      </Pane>
+      <Pane layoutX="236.0" layoutY="491.0" prefHeight="63.0" prefWidth="864.0" style="-fx-background-color: #fafafa;">
+         <children>
+            <Label layoutX="456.0" layoutY="13.0" text="Now playing:">
+               <font>
+                  <Font name="System Italic" size="10.0" />
+               </font>
+            </Label>
+            <FontAwesomeIconView fx:id="button" glyphName="PLAY" layoutX="53.0" layoutY="40.0" onMouseClicked="#playPause" size="26" wrappingWidth="14.585784912109375" />
+            <FontAwesomeIconView glyphName="ARROW_LEFT" layoutX="18.0" layoutY="39.0" size="25" text="" />
+            <FontAwesomeIconView glyphName="ARROW_RIGHT" layoutX="83.0" layoutY="39.0" size="25" text="" />
+            <Label layoutX="361.0" layoutY="25.0" text="The Pretty Reckless - My Medicine">
+               <font>
+                  <Font name="System Italic" size="16.0" />
+               </font>
+            </Label>
+            <FontAwesomeIconView glyphName="" layoutX="684.0" layoutY="41.0" selectionFill="#8d6c6c" size="25" text="" />
+            <FontAwesomeIconView glyphName="REPEAT" layoutX="139.0" layoutY="41.0" size="25" text="" />
+            <FontAwesomeIconView glyphName="REPEAT" layoutX="176.0" layoutY="40.0" size="25" text="" />
+            <Slider layoutX="714.0" layoutY="24.0" />
+            <Slider layoutX="5.0" layoutY="-1.0" prefHeight="15.0" prefWidth="849.0" />
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>
