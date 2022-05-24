@@ -1,23 +1,34 @@
 package com.example.musicplayer;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.TreeItem;
-import javafx.scene.control.TreeView;
+import javafx.scene.control.*;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import javax.swing.JFileChooser;
 
 import java.io.FileFilter;
+import java.io.IOException;
 import java.net.URI;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ResourceBundle;
 import java.io.File;
-
+import java.util.Timer;
+import java.util.TimerTask;
 
 
 public class HelloController implements Initializable {
 
+    //@FXML
+    //private Slider songProgressBar;
+
+    @FXML
+    private Button addFile;
 
     @FXML
     private TreeView<String> treeView;
@@ -25,7 +36,7 @@ public class HelloController implements Initializable {
     @FXML
     private String[] filter = {"name", "newness", "weight"};
 
-
+    @FXML
     String libraryRoot;
     TreeItem<String>[] fileList;
     private String currentMusic;
@@ -33,17 +44,43 @@ public class HelloController implements Initializable {
     private boolean isPlaying;
     private String peakedMusic;
 
+    //@FXML
+    //private ProgressBar progressBar;
+
+    @FXML
+    private Label songLabel;
+
+    @FXML
+    private ChoiceBox myChoiceBox;
+
+    @FXML
+    private Slider volumeSlider = new Slider();
+
+    @FXML
+    private ScrollBar scrollBar;
+
+
+
+    private int character; // СТОЙ СЕК
+    private String libraryPath = "C:\\Users\\thedi\\Desktop\\123\\Library\\";
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        TreeItem<String> rootItem = new TreeItem<>("C:\\Users\\Admin\\IdeaProjects\\bdc-player\\Library\\");
+        addFile = new Button();
+        myChoiceBox.getItems().addAll(filter);
+        TreeItem<String> rootItem = new TreeItem<>("Library");
         this.treeView.setRoot(rootItem);
-        libraryRoot = "C:\\Users\\Admin\\IdeaProjects\\bdc-player\\Library\\";
+        libraryRoot = "C:\\Users\\thedi\\Desktop\\123\\Library\\";
         fileList = new TreeItem[directoryLister(libraryRoot).length];
         for (int i = 0; i < directoryLister(libraryRoot).length; i++) {
             fileList[i] = new TreeItem<>(directoryLister(libraryRoot)[i].getName());
             rootItem.getChildren().addAll(fileList[i]);
         }
+
+        volumeSlider.valueProperty().addListener((ObservableValue<? extends Number> observableValue, Number number, Number t1) -> {
+            player.setVolume(volumeSlider.getValue() * 0.01);
+        });
+
 
     }
 
@@ -72,6 +109,11 @@ public class HelloController implements Initializable {
             Media pick = new Media(u.toString()); //throws here
             player = new MediaPlayer(pick);
             player.play();
+
+            String currentMusicNew = currentMusic.replace("_", " ");
+
+
+            songLabel.setText(currentMusicNew.substring(0,currentMusicNew.length()-13));
         }
     }
 
@@ -87,10 +129,31 @@ public class HelloController implements Initializable {
             playMedia();
             isPlaying = true;
         }
-
     }
 
-// если не нажимая паузы переключить трек на другой и нажать пдэй, то будет пауза, трек воспроизведётся после второго нажатия на плэй
-    // НЕ СТИРАТЬ
+
+    public void addFile() {
+        String filePath = null;
+        JFileChooser file = new JFileChooser();
+        file.setMultiSelectionEnabled(true);
+        file.setFileSelectionMode(JFileChooser.FILES_ONLY);
+        file.setFileHidingEnabled(false);
+        if (file.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
+            java.io.File f = file.getSelectedFile();
+            filePath = f.getPath();
+        }
+        moveFile(filePath, libraryPath + filePath.substring(filePath.lastIndexOf("\\") + 1));
+    }
+    private static void moveFile(String src, String dest ) {
+        Path result = null;
+        try {
+            result =  Files.move(Paths.get(src), Paths.get(dest));
+        } catch (IOException e) {}
+    }
+
+
+
+// choosing another song while the current one is playing will lead to the one playing getting stopped.
+// You should then therefore click on the song the second time.
 
 }
