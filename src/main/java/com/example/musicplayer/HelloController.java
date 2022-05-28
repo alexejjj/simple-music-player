@@ -24,8 +24,10 @@ import java.util.TimerTask;
 
 public class HelloController implements Initializable {
 
-    //@FXML
-    //private Slider songProgressBar;
+    @FXML
+    private ProgressBar songProgressBar;
+    private Timer timer;
+    private TimerTask task;
 
     @FXML
     private Button addFile;
@@ -62,8 +64,9 @@ public class HelloController implements Initializable {
 
 
     private int character;
-    private String libraryPath = "C:\\Users\\Oleg\\IdeaProjects\\simple-music-player\\Library\\"; // поменять только тут
-
+    private String libraryPath = "C:\\Users\\anast\\IdeaProjects\\simple-music-player\\Library\\"; // поменять только тут
+                                                                                                    // важно сохраниить \\
+                                                                                                        // на конце
     @Override
     // ЕСЛИ ВЫ ЧТО-ТО МЕНЯЕТЕ В ЭТОМ МЕТОДЕ - ПРОСЬБА ДОБАВИТЬ ИЗМЕНЕНИЯ В
     // ЭТОТ ЖЕ МЕТОД НИЖЕ, МОЖНО CNTRL+F И ВБИТЬ "initialive", отсюда тупо скопировать то что вы поменяли и вставить туда
@@ -103,6 +106,7 @@ public class HelloController implements Initializable {
     }
 
     public void playMedia(){
+        this.beginTimer();
         if (player != null && peakedMusic.equals(currentMusic)){
             player.play();
         } else {
@@ -121,6 +125,7 @@ public class HelloController implements Initializable {
     }
 
     public void pauseMedia(){
+        this.cancelTimer();
         player.pause();
     }
 
@@ -181,6 +186,29 @@ public class HelloController implements Initializable {
         } catch (IOException e) {}
     }
 
+    public void beginTimer(){
+
+        timer = new Timer();
+        task = new TimerTask() {
+
+            @Override
+            public void run() {
+                isPlaying = true;
+                double current = player.getCurrentTime().toSeconds();
+                double end = player.getTotalDuration().toSeconds();
+                songProgressBar.setProgress(current/end);
+
+                if(current/end == 1){
+                    cancelTimer();
+                }
+            }
+        };
+        timer.scheduleAtFixedRate(task,1000,1000);
+    }
+
+    public void cancelTimer(){
+        isPlaying = false;
+    }
 
 
 
