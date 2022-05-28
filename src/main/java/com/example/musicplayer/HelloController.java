@@ -61,28 +61,31 @@ public class HelloController implements Initializable {
 
 
 
-    private int character; // СТОЙ СЕК
-    private String libraryPath = "C:\\Users\\thedi\\Desktop\\123\\Library\\";
+    private int character;
+    private String libraryPath = "C:\\Users\\Oleg\\IdeaProjects\\simple-music-player\\Library\\"; // поменять только тут
 
     @Override
+    // ЕСЛИ ВЫ ЧТО-ТО МЕНЯЕТЕ В ЭТОМ МЕТОДЕ - ПРОСЬБА ДОБАВИТЬ ИЗМЕНЕНИЯ В
+    // ЭТОТ ЖЕ МЕТОД НИЖЕ, МОЖНО CNTRL+F И ВБИТЬ "initialive", отсюда тупо скопировать то что вы поменяли и вставить туда
     public void initialize(URL url, ResourceBundle resourceBundle) {
         addFile = new Button();
         myChoiceBox.getItems().addAll(filter);
         TreeItem<String> rootItem = new TreeItem<>("Library");
         this.treeView.setRoot(rootItem);
-        libraryRoot = "C:\\Users\\thedi\\Desktop\\123\\Library\\";
+        libraryRoot = libraryPath;
         fileList = new TreeItem[directoryLister(libraryRoot).length];
         for (int i = 0; i < directoryLister(libraryRoot).length; i++) {
             fileList[i] = new TreeItem<>(directoryLister(libraryRoot)[i].getName());
             rootItem.getChildren().addAll(fileList[i]);
         }
-
+        rootItem.setExpanded(true);
         volumeSlider.valueProperty().addListener((ObservableValue<? extends Number> observableValue, Number number, Number t1) -> {
             player.setVolume(volumeSlider.getValue() * 0.01);
         });
 
 
     }
+
 
     private File[] directoryLister(String root) {
         File rootDir = new File(root);
@@ -131,6 +134,32 @@ public class HelloController implements Initializable {
         }
     }
 
+    public void deleteFile() {
+        File file = new File(libraryPath+peakedMusic);
+        if(file.delete()){
+            System.out.println(peakedMusic + " файл удален");
+        }else System.out.println(peakedMusic + " не обнаружено");
+        initialize(HelloApplication.class.getResource("player.fxml"));
+    }
+    @FXML
+    public void initialize(URL url) {
+        addFile = new Button();
+        myChoiceBox.getItems().addAll(filter);
+        TreeItem<String> rootItem = new TreeItem<>("Library");
+        this.treeView.setRoot(rootItem);
+        libraryRoot = libraryPath;
+        fileList = new TreeItem[directoryLister(libraryRoot).length];
+        for (int i = 0; i < directoryLister(libraryRoot).length; i++) {
+            fileList[i] = new TreeItem<>(directoryLister(libraryRoot)[i].getName());
+            rootItem.getChildren().addAll(fileList[i]);
+        }
+        rootItem.setExpanded(true);
+        volumeSlider.valueProperty().addListener((ObservableValue<? extends Number> observableValue, Number number, Number t1) -> {
+            player.setVolume(volumeSlider.getValue() * 0.01);
+        });
+
+
+    }
 
     public void addFile() {
         String filePath = null;
@@ -143,6 +172,7 @@ public class HelloController implements Initializable {
             filePath = f.getPath();
         }
         moveFile(filePath, libraryPath + filePath.substring(filePath.lastIndexOf("\\") + 1));
+        initialize(HelloApplication.class.getResource("player.fxml"));
     }
     private static void moveFile(String src, String dest ) {
         Path result = null;
@@ -150,6 +180,7 @@ public class HelloController implements Initializable {
             result =  Files.move(Paths.get(src), Paths.get(dest));
         } catch (IOException e) {}
     }
+
 
 
 

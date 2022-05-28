@@ -55,7 +55,11 @@
                   <FontAwesomeIconView glyphName="PLUS" size="25" />
                </graphic>
             </Button>
-            <FontAwesomeIconView glyphName="TRASH" layoutX="825.0" layoutY="25.0" size="25" />
+            <Button layoutX="825.0" layoutY="1.0" mnemonicParsing="false" onContextMenuRequested="#deleteFile" onMouseClicked="#deleteFile">
+               <graphic>
+                  <FontAwesomeIconView glyphName="TRASH" size="25" />
+               </graphic>
+            </Button>
          </children>
       </Pane>
       <Pane layoutX="237.0" layoutY="74.0" prefHeight="417.0" prefWidth="863.0" style="-fx-background-color: #000;">
