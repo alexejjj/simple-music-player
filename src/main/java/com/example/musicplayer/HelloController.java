@@ -126,7 +126,6 @@ public class HelloController implements Initializable {
 
     public void pauseMedia(){
         this.cancelTimer();
-        player.pause();
     }
 
     public void playPause() {
@@ -142,8 +141,8 @@ public class HelloController implements Initializable {
     public void deleteFile() {
         File file = new File(libraryPath+peakedMusic);
         if(file.delete()){
-            System.out.println(peakedMusic + " файл удален");
-        }else System.out.println(peakedMusic + " не обнаружено");
+            System.out.println(peakedMusic + " file deleted");
+        }else System.out.println(peakedMusic + " file not found");
         initialize(HelloApplication.class.getResource("player.fxml"));
     }
     @FXML
@@ -207,7 +206,7 @@ public class HelloController implements Initializable {
     }
 
     public void cancelTimer(){
-        isPlaying = false;
+       player.pause();
     }
 
 
