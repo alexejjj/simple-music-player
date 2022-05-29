@@ -7,6 +7,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import javafx.util.Duration;
+
 import javax.swing.JFileChooser;
 
 import java.io.FileFilter;
@@ -16,10 +18,8 @@ import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ResourceBundle;
+import java.util.*;
 import java.io.File;
-import java.util.Timer;
-import java.util.TimerTask;
 
 
 public class HelloController implements Initializable {
@@ -45,6 +45,8 @@ public class HelloController implements Initializable {
     MediaPlayer player;
     private boolean isPlaying;
     private String peakedMusic;
+    int songIndex;
+    boolean isCycled;
 
     //@FXML
     //private ProgressBar progressBar;
@@ -64,7 +66,7 @@ public class HelloController implements Initializable {
 
 
     private int character;
-    private String libraryPath = "C:\\Users\\anast\\IdeaProjects\\simple-music-player\\Library\\"; // поменять только тут
+    private String libraryPath = "C:\\Users\\thedi\\Desktop\\BDC musicplayer\\Library\\"; // поменять только тут
                                                                                                     // важно сохраниить \\
                                                                                                         // на конце
     @Override
@@ -115,6 +117,10 @@ public class HelloController implements Initializable {
             URI u = f.toURI();
             Media pick = new Media(u.toString()); //throws here
             player = new MediaPlayer(pick);
+            if (isCycled) {
+                isCycled = false;
+                cycleTrack();
+            }
             player.play();
 
             String currentMusicNew = currentMusic.replace("_", " ");
@@ -157,6 +163,7 @@ public class HelloController implements Initializable {
             fileList[i] = new TreeItem<>(directoryLister(libraryRoot)[i].getName());
             rootItem.getChildren().addAll(fileList[i]);
         }
+
         rootItem.setExpanded(true);
         volumeSlider.valueProperty().addListener((ObservableValue<? extends Number> observableValue, Number number, Number t1) -> {
             player.setVolume(volumeSlider.getValue() * 0.01);
@@ -210,6 +217,51 @@ public class HelloController implements Initializable {
     }
 
 
+    public void playPrevious() {
+        int currentIndex = Arrays.stream(fileList).map(TreeItem::getValue).toList().indexOf(currentMusic);
+        if (currentIndex < 1) {
+            pauseMedia();
+            player.seek(new Duration(0.0));
+            playMedia();
+            return;
+        }
+        peakedMusic = fileList[currentIndex - 1].getValue();
+        pauseMedia();
+        playMedia();
+    }
+
+    public void playNext() {
+        int currentIndex = Arrays.stream(fileList).map(TreeItem::getValue).toList().indexOf(currentMusic);
+        if (currentIndex == fileList.length - 1) {
+            pauseMedia();
+            player.seek(new Duration(0.0));
+            playMedia();
+            return;
+        }
+        peakedMusic = fileList[currentIndex + 1].getValue();
+        pauseMedia();
+        playMedia();
+    }
+
+    public void cycleTrack() {
+        if (isCycled) {
+            isCycled = false;
+            player.cycleCountProperty().set(0);
+        } else {
+            player.cycleCountProperty().set(Integer.MAX_VALUE);
+            isCycled = true;
+        }
+    }
+
+
+    public void shuffleTrack() {
+        List<TreeItem<String>> tracks = new ArrayList<>();
+        Arrays.stream(fileList).map(t -> tracks.add(t));
+        Collections.shuffle(tracks);
+        for (int i = 0; i<tracks.size(); i++){
+            fileList[i] = tracks.get(i);
+        }
+    }
 
 // choosing another song while the current one is playing will lead to the one playing getting stopped.
 // You should then therefore click on the song the second time.
