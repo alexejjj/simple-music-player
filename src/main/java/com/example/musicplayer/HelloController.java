@@ -1,7 +1,11 @@
 package com.example.musicplayer;
 
 import javafx.beans.binding.Bindings;
+
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.TimeUnit;
+
+import javafx.collections.ObservableList;
 import org.apache.commons.lang3.time.StopWatch;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -72,7 +76,7 @@ public class HelloController implements Initializable {
 
     private boolean atEndOfSong = false;
 
-    private String libraryPath = "C:\\Users\\anast\\IdeaProjects\\simple-music-player\\Library\\"; // change the path here
+    private String libraryPath = "C:\\Users\\thedi\\Desktop\\BDC musicplayer\\Library\\"; // change the path here
                                                                                                    // keep '\\' at the end of the path
 
     @Override
@@ -257,7 +261,6 @@ public class HelloController implements Initializable {
         isPlaying = false;
     }
 
-
     public void playPrevious() {
         int currentIndex = Arrays.stream(fileList).map(TreeItem::getValue).toList().indexOf(currentMusic);
         if (currentIndex < 1) {
@@ -294,13 +297,18 @@ public class HelloController implements Initializable {
         }
     }
 
-
     public void shuffleTrack() {
-        List<TreeItem<String>> tracks = new ArrayList<>();
-        Arrays.stream(fileList).map(t -> tracks.add(t));
-        Collections.shuffle(tracks);
-        for (int i = 0; i<tracks.size(); i++){
-            fileList[i] = tracks.get(i);
+        Random rnd = ThreadLocalRandom.current();
+        for (int i = fileList.length - 1; i > 0; i--)
+        {
+            int index = rnd.nextInt(i + 1);
+            TreeItem<String> a = fileList[index];
+            fileList[index] = fileList[i];
+            fileList[i] = a;
+        }
+        List<TreeItem<String>> tracksList = treeView.getRoot().getChildren();
+        for(int i = 0; i < tracksList.size(); i++) {
+            tracksList.set(i, fileList[i]);
         }
     }
 
