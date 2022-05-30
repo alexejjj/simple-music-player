@@ -1,5 +1,8 @@
 package com.example.musicplayer;
 
+import javafx.beans.binding.Bindings;
+import java.util.concurrent.TimeUnit;
+import org.apache.commons.lang3.time.StopWatch;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
@@ -9,6 +12,9 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
 
+import javax.sound.sampled.AudioFileFormat;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.JFileChooser;
 
 import java.io.FileFilter;
@@ -20,6 +26,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
 import java.io.File;
+import java.util.concurrent.Callable;
 
 
 public class HelloController implements Initializable {
@@ -48,8 +55,6 @@ public class HelloController implements Initializable {
     int songIndex;
     boolean isCycled;
 
-    //@FXML
-    //private ProgressBar progressBar;
 
     @FXML
     private Label songLabel;
@@ -61,17 +66,18 @@ public class HelloController implements Initializable {
     private Slider volumeSlider = new Slider();
 
     @FXML
-    private ScrollBar scrollBar;
+    private Label labelCurrentTime;
+    @FXML
+    private Label labelTotalTime;
 
+    private boolean atEndOfSong = false;
 
+    private String libraryPath = "C:\\Users\\anast\\IdeaProjects\\simple-music-player\\Library\\"; // change the path here
+                                                                                                   // keep '\\' at the end of the path
 
-    private int character;
-    private String libraryPath = "C:\\Users\\thedi\\Desktop\\BDC musicplayer\\Library\\"; // поменять только тут
-                                                                                                    // важно сохраниить \\
-                                                                                                        // на конце
     @Override
-    // ЕСЛИ ВЫ ЧТО-ТО МЕНЯЕТЕ В ЭТОМ МЕТОДЕ - ПРОСЬБА ДОБАВИТЬ ИЗМЕНЕНИЯ В
-    // ЭТОТ ЖЕ МЕТОД НИЖЕ, МОЖНО CNTRL+F И ВБИТЬ "initialive", отсюда тупо скопировать то что вы поменяли и вставить туда
+    // IN CASE YOU MAKE ANY CHANGES IN THIS METHOD, PLEASE ADD ALL OF THEM
+    // TO THE SAME METHOD BELOW, USING CTRL+F "Initialize" AND BY COPYING AND PASTING ALL THE CHANGES MADE
     public void initialize(URL url, ResourceBundle resourceBundle) {
         addFile = new Button();
         myChoiceBox.getItems().addAll(filter);
@@ -88,6 +94,31 @@ public class HelloController implements Initializable {
             player.setVolume(volumeSlider.getValue() * 0.01);
         });
 
+
+    }
+
+
+    private void bindCurrentTimeLabel(){  //showing the time of a song elapsed
+        labelCurrentTime.textProperty().bind(Bindings.createStringBinding(new Callable<String>() {
+            @Override
+            public String call() throws Exception {
+                return getTime(player.getCurrentTime());
+            }
+        }, player.currentTimeProperty()));
+    }
+
+
+    public String getTime(Duration time){
+
+        int minutes = (int) time.toMinutes();
+        int seconds = (int) time.toSeconds();
+
+        //we don't want to go to 61 seconds, thus this if statement:
+
+        if (seconds > 59) seconds %= 60;  //if it's 61, it'll return 1 etc.
+        if (minutes > 59) minutes %= 60;
+
+        return String.format("%02d:%02d", minutes, seconds);
 
     }
 
@@ -126,12 +157,23 @@ public class HelloController implements Initializable {
             String currentMusicNew = currentMusic.replace("_", " ");
 
 
+            player.totalDurationProperty().addListener(new ChangeListener<Duration>() {
+                @Override
+                public void changed(ObservableValue<? extends Duration> observableValue, Duration oldDuration, Duration newDuration) {
+                    labelTotalTime.setText(getTime(newDuration));
+                }
+            });
+
+            bindCurrentTimeLabel();
+
+
             songLabel.setText(currentMusicNew.substring(0,currentMusicNew.length()-13));
         }
     }
 
     public void pauseMedia(){
         this.cancelTimer();
+        player.pause();
     }
 
     public void playPause() {
@@ -168,7 +210,6 @@ public class HelloController implements Initializable {
         volumeSlider.valueProperty().addListener((ObservableValue<? extends Number> observableValue, Number number, Number t1) -> {
             player.setVolume(volumeSlider.getValue() * 0.01);
         });
-
 
     }
 
@@ -213,7 +254,7 @@ public class HelloController implements Initializable {
     }
 
     public void cancelTimer(){
-       player.pause();
+        isPlaying = false;
     }
 
 
