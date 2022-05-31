@@ -76,7 +76,7 @@ public class HelloController implements Initializable {
 
     private boolean atEndOfSong = false;
 
-    private String libraryPath = "C:\\Users\\anast\\IdeaProjects\\simple-music-player\\Library\\"; // change the path here
+    private String libraryPath;
                                                                                                    // keep '\\' at the end of the path
 
     @Override
@@ -87,6 +87,16 @@ public class HelloController implements Initializable {
         myChoiceBox.getItems().addAll(filter);
         TreeItem<String> rootItem = new TreeItem<>("Library");
         this.treeView.setRoot(rootItem);
+        String filePath = null;
+        JFileChooser file = new JFileChooser();
+        file.setMultiSelectionEnabled(true);
+        file.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        file.setFileHidingEnabled(false);
+        if (file.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
+            java.io.File f = file.getSelectedFile();
+            filePath = f.getPath();
+        }
+        this.libraryPath = filePath + "\\";
         libraryRoot = libraryPath;
         fileList = new TreeItem[directoryLister(libraryRoot).length];
         for (int i = 0; i < directoryLister(libraryRoot).length; i++) {
@@ -117,7 +127,7 @@ public class HelloController implements Initializable {
         int minutes = (int) time.toMinutes();
         int seconds = (int) time.toSeconds();
 
-        //considering the fact that there's only 60 sec/min
+        //we don't want to go to 61 seconds, thus this if statement:
 
         if (seconds > 59) seconds %= 60;  //if it's 61, it'll return 1 etc.
         if (minutes > 59) minutes %= 60;
@@ -142,8 +152,8 @@ public class HelloController implements Initializable {
         }
     }
 
-    public void playMedia(){  //!!!"play" button works if pressed twice (after pressing it the second time)!!!
-//        this.beginTimer();
+    public void playMedia(){
+        this.beginTimer();
         if (player != null && peakedMusic.equals(currentMusic)){
             player.play();
         } else {
@@ -175,25 +185,23 @@ public class HelloController implements Initializable {
         }
     }
 
-    public void pauseMedia(){  //!!!"play" button works if pressed twice (after pressing it the second time)!!!
-//        this.cancelTimer();
+    public void pauseMedia(){
+        this.cancelTimer();
         player.pause();
     }
 
-    public void playPause() {  //!!!"play" button works if pressed twice (after pressing it the second time)!!!
+    public void playPause() {
         if (isPlaying) {
             pauseMedia();
-//            isPlaying = false;
-            this.cancelTimer();
+            isPlaying = false;
         } else {
             playMedia();
-//            isPlaying = true;
-            this.beginTimer();
+            isPlaying = true;
         }
     }
 
     public void deleteFile() {
-        File file = new File(libraryPath + peakedMusic);
+        File file = new File(libraryPath+peakedMusic);
         if(file.delete()){
             System.out.println(peakedMusic + " file deleted");
         }else System.out.println(peakedMusic + " file not found");
@@ -239,7 +247,7 @@ public class HelloController implements Initializable {
         } catch (IOException e) {}
     }
 
-    public void beginTimer(){  //method for a progress bar
+    public void beginTimer(){
 
         timer = new Timer();
         task = new TimerTask() {
@@ -251,7 +259,7 @@ public class HelloController implements Initializable {
                 double end = player.getTotalDuration().toSeconds();
                 songProgressBar.setProgress(current/end);
 
-                if(current/end == 1){  //checking if the current song is over
+                if(current/end == 1){
                     cancelTimer();
                 }
             }
