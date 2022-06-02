@@ -42,9 +42,9 @@
       </Label>
       <Pane layoutX="236.0" layoutY="35.0" prefHeight="34.0" prefWidth="864.0" style="-fx-background-color: #fafafa;">
          <children>
-            <TextField layoutX="3.0" layoutY="4.0" prefHeight="26.0" prefWidth="371.0" promptText="Search" />
+            <TextField fx:id="textAreaSearch" layoutX="3.0" layoutY="4.0" prefHeight="26.0" prefWidth="371.0" promptText="Search" />
             <ChoiceBox fx:id="myChoiceBox" layoutX="629.0" layoutY="4.0" prefWidth="150.0" />
-            <FontAwesomeIconView glyphName="SEARCH" layoutX="356.0" layoutY="22.0" wrappingWidth="12.07464599609375" />
+            <FontAwesomeIconView glyphName="SEARCH" layoutX="356.0" layoutY="22.0" onMouseClicked="#search" wrappingWidth="12.07464599609375" />
             <Label layoutX="576.0" layoutY="8.0" prefHeight="18.0" prefWidth="49.0" text="filter by:">
                <font>
                   <Font name="System Italic" size="14.0" />

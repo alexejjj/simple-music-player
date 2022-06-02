@@ -205,26 +205,39 @@ public class HelloController implements Initializable {
         if(file.delete()){
             System.out.println(peakedMusic + " file deleted");
         }else System.out.println(peakedMusic + " file not found");
-        initialize(HelloApplication.class.getResource("player.fxml"));
+        upadate();
     }
+
+
     @FXML
-    public void initialize(URL url) {
-        addFile = new Button();
-        myChoiceBox.getItems().addAll(filter);
+    TextField textAreaSearch = new TextField();
+
+    public void upadate() {
         TreeItem<String> rootItem = new TreeItem<>("Library");
-        this.treeView.setRoot(rootItem);
-        libraryRoot = libraryPath;
         fileList = new TreeItem[directoryLister(libraryRoot).length];
+        this.treeView.setRoot(rootItem);
         for (int i = 0; i < directoryLister(libraryRoot).length; i++) {
             fileList[i] = new TreeItem<>(directoryLister(libraryRoot)[i].getName());
             rootItem.getChildren().addAll(fileList[i]);
         }
-
         rootItem.setExpanded(true);
-        volumeSlider.valueProperty().addListener((ObservableValue<? extends Number> observableValue, Number number, Number t1) -> {
-            player.setVolume(volumeSlider.getValue() * 0.01);
-        });
+    }
+    public void upadate(String keyWord) {
+        TreeItem<String> rootItem = new TreeItem<>("Library");
+        fileList = new TreeItem[directoryLister(libraryRoot).length];
+        this.treeView.setRoot(rootItem);
+        for (int i = 0; i < directoryLister(libraryRoot).length; i++) {
+            if (directoryLister(libraryRoot)[i].getName().contains(keyWord)) {
+                fileList[i] = new TreeItem<>(directoryLister(libraryRoot)[i].getName());
+                rootItem.getChildren().addAll(fileList[i]);
+            }
+        }
+        rootItem.setExpanded(true);
+    }
 
+    public void search() {
+        String searchRequest = textAreaSearch.getText();
+        upadate(searchRequest);
     }
 
     public void addFile() {
@@ -238,8 +251,9 @@ public class HelloController implements Initializable {
             filePath = f.getPath();
         }
         moveFile(filePath, libraryPath + filePath.substring(filePath.lastIndexOf("\\") + 1));
-        initialize(HelloApplication.class.getResource("player.fxml"));
+        upadate();
     }
+
     private static void moveFile(String src, String dest ) {
         Path result = null;
         try {
