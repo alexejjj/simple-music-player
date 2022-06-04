@@ -42,21 +42,21 @@
       </Label>
       <Pane layoutX="236.0" layoutY="35.0" prefHeight="34.0" prefWidth="864.0" style="-fx-background-color: #fafafa;">
          <children>
-            <TextField fx:id="textAreaSearch" layoutX="3.0" layoutY="4.0" prefHeight="26.0" prefWidth="371.0" promptText="Search" />
+            <TextField layoutX="3.0" layoutY="4.0" prefHeight="26.0" prefWidth="371.0" promptText="Search" />
             <ChoiceBox fx:id="myChoiceBox" layoutX="629.0" layoutY="4.0" prefWidth="150.0" />
-            <FontAwesomeIconView glyphName="SEARCH" layoutX="356.0" layoutY="22.0" onMouseClicked="#search" wrappingWidth="12.07464599609375" />
+            <FontAwesomeIconView glyphName="SEARCH" layoutX="356.0" layoutY="22.0" wrappingWidth="12.07464599609375" />
             <Label layoutX="576.0" layoutY="8.0" prefHeight="18.0" prefWidth="49.0" text="filter by:">
                <font>
                   <Font name="System Italic" size="14.0" />
                </font>
             </Label>
             <FontAwesomeIconView glyphName="SEARCH" layoutX="560.0" layoutY="22.0" size="14" text="" wrappingWidth="12.07464599609375" />
-            <Button fx:id="addFile" layoutX="789.0" layoutY="1.0" mnemonicParsing="false" onContextMenuRequested="#addFile" onMouseClicked="#addFile">
+            <Button layoutX="789.0" layoutY="1.0" mnemonicParsing="false">
                <graphic>
                   <FontAwesomeIconView glyphName="PLUS" size="25" />
                </graphic>
             </Button>
-            <Button layoutX="825.0" layoutY="1.0" mnemonicParsing="false" onContextMenuRequested="#deleteFile" onMouseClicked="#deleteFile">
+            <Button layoutX="825.0" layoutY="1.0" mnemonicParsing="false">
                <graphic>
                   <FontAwesomeIconView glyphName="TRASH" size="25" />
                </graphic>
@@ -76,21 +76,21 @@
                   <Font name="System Italic" size="10.0" />
                </font>
             </Label>
-            <FontAwesomeIconView fx:id="button" glyphName="PLAY" layoutX="55.0" layoutY="53.0" onMouseClicked="#playPause" size="26" wrappingWidth="14.585784912109375" />
-            <FontAwesomeIconView glyphName="ARROW_LEFT" layoutX="14.0" layoutY="53.0" onMouseClicked="#playPrevious" size="25" text="" />
-            <FontAwesomeIconView glyphName="ARROW_RIGHT" layoutX="87.0" layoutY="53.0" onMouseClicked="#playNext" size="25" text="" />
-            <Label fx:id="songLabel" alignment="CENTER" layoutX="207.0" layoutY="25.0" prefHeight="25.0" prefWidth="471.0" text="Stephen Sanchez - Until I Found You" textAlignment="CENTER">
+            <FontAwesomeIconView glyphName="PLAY" layoutX="55.0" layoutY="53.0" size="26" wrappingWidth="14.585784912109375" />
+            <FontAwesomeIconView glyphName="ARROW_LEFT" layoutX="14.0" layoutY="53.0" size="25" text="" />
+            <FontAwesomeIconView glyphName="ARROW_RIGHT" layoutX="87.0" layoutY="53.0" size="25" text="" />
+            <Label alignment="CENTER" layoutX="207.0" layoutY="25.0" prefHeight="25.0" prefWidth="471.0" text="Stephen Sanchez - Until I Found You" textAlignment="CENTER">
                <font>
                   <Font name="System Italic" size="16.0" />
                </font>
             </Label>
             <FontAwesomeIconView glyphName="" layoutX="679.0" layoutY="53.0" selectionFill="#8d6c6c" size="25" text="" />
-            <FontAwesomeIconView glyphName="REPEAT" layoutX="139.0" layoutY="53.0" onMouseClicked="#shuffleTrack" size="25" text="" />
-            <FontAwesomeIconView glyphName="REPEAT" layoutX="175.0" layoutY="52.0" onMouseClicked="#cycleTrack" size="25" text="" />
-            <Slider fx:id="volumeSlider" layoutX="710.0" layoutY="37.0" max="100" value="50.0" />
-            <ProgressBar fx:id="songProgressBar" layoutX="1.0" prefHeight="12.0" prefWidth="863.0" progress="0.0" />
-            <Label fx:id="labelCurrentTime" layoutX="12.0" layoutY="11.0" text="00:00" />
-            <Label fx:id="labelTotalTime" layoutX="822.0" layoutY="11.0" text="00:00" />
+            <FontAwesomeIconView glyphName="REPEAT" layoutX="139.0" layoutY="53.0" size="25" text="" />
+            <FontAwesomeIconView glyphName="REPEAT" layoutX="175.0" layoutY="52.0" size="25" text="" />
+            <Slider layoutX="710.0" layoutY="37.0" max="100" value="50.0" />
+            <ProgressBar layoutX="1.0" prefHeight="12.0" prefWidth="863.0" progress="0.0" />
+            <Label layoutX="12.0" layoutY="11.0" text="00:00" />
+            <Label layoutX="822.0" layoutY="11.0" text="00:00" />
          </children>
       </Pane>
    </children>
