@@ -7,10 +7,15 @@ import java.util.concurrent.ThreadLocalRandom;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.layout.StackPane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import javax.swing.JFileChooser;
@@ -74,6 +79,8 @@ public class HelloController implements Initializable {
     private String rootPath;
     private boolean existResourceFolder = false;
 
+    String currentUsersHomeDir = System.getProperty("user.home");
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         //addFile = new Button();
@@ -81,7 +88,6 @@ public class HelloController implements Initializable {
         TreeItem<String> rootItem = new TreeItem<>("Music");
         this.treeView.setRoot(rootItem);
         String filePath = null;
-        String currentUsersHomeDir = System.getProperty("user.home");
         System.out.println(currentUsersHomeDir);
         for (int i = 0; i < directoryLister(currentUsersHomeDir).length; i++) {
             if (directoryLister(currentUsersHomeDir)[i].equals("MusicPlayer")) {
@@ -139,6 +145,14 @@ public class HelloController implements Initializable {
         return fileList;
     }
 
+    public void selectItem() {
+        TreeItem<String> item = treeView.getSelectionModel().getSelectedItem();
+        if(item != null) {
+            System.out.println(item.getValue());
+            peakedMusic = item.getValue();
+        }
+    }
+
 
 //    private void bindCurrentTimeLabel(){  //showing the time of a song elapsed
 //        labelCurrentTime.textProperty().bind(Bindings.createStringBinding(new Callable<String>() {
@@ -163,15 +177,6 @@ public class HelloController implements Initializable {
 //        return String.format("%02d:%02d", minutes, seconds);
 //
 //    }
-//
-//
-    public void selectItem() {
-        TreeItem<String> item = treeView.getSelectionModel().getSelectedItem();
-        if(item != null) {
-            System.out.println(item.getValue());
-            peakedMusic = item.getValue();
-        }
-    }
 //
 //    public void playMedia(){
 //        this.beginTimer();
@@ -221,15 +226,6 @@ public class HelloController implements Initializable {
 //        }
 //    }
 //
-//    public void deleteFile() {
-//        File file = new File(rootPath +peakedMusic);
-//        if(file.delete()){
-//            System.out.println(peakedMusic + " file deleted");
-//        }else System.out.println(peakedMusic + " file not found");
-//        upadate();
-//    }
-//
-//
 //    @FXML
 //    TextField textAreaSearch = new TextField();
 //
@@ -275,6 +271,14 @@ public class HelloController implements Initializable {
 //        upadate();
 //    }
 //
+//    public void deleteFile() {
+//        File file = new File(rootPath +peakedMusic);
+//        if(file.delete()){
+//            System.out.println(peakedMusic + " file deleted");
+//        }else System.out.println(peakedMusic + " file not found");
+//        upadate();
+//    }
+//
 //    private static void moveFile(String src, String dest ) {
 //        Path result = null;
 //        try {
@@ -282,6 +286,15 @@ public class HelloController implements Initializable {
 //        } catch (IOException e) {}
 //    }
 //
+
+    public void addPlaylist() throws IOException {
+        FXMLLoader fxmlLoader1 = new FXMLLoader(HelloApplication.class.getResource("playlist.fxml"));
+        Scene secondScene = new Scene(fxmlLoader1.load());
+        Stage stagePlaylist = new Stage();
+        stagePlaylist.setScene(secondScene);
+        stagePlaylist.show();
+    }
+
 //    public void beginTimer(){
 //
 //        timer = new Timer();

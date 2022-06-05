@@ -18,19 +18,29 @@
       <AnchorPane layoutX="-13.0" layoutY="35.0" prefHeight="519.0" prefWidth="249.0" style="-fx-background-color: #696969;">
          <children>
             <ButtonBar layoutX="-90.0" layoutY="137.0" prefHeight="0.0" prefWidth="205.0" />
-            <Button alignment="CENTER" layoutX="33.0" layoutY="190.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="180.0" text="Playlists">
+            <Button alignment="CENTER" layoutX="48.0" layoutY="463.0" mnemonicParsing="false" onContextMenuRequested="#addPlaylist" onMouseClicked="#addPlaylist" prefHeight="33.0" prefWidth="98.0" text="add playlist">
                <graphic>
                   <FontAwesomeIconView glyphName="LIST" />
                </graphic>
             </Button>
-            <Button alignment="CENTER" layoutX="34.0" layoutY="132.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="180.0" text="Video">
+            <Button alignment="CENTER" layoutX="35.0" layoutY="75.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="180.0" text="Video">
                <graphic>
                   <FontAwesomeIconView text="" />
                </graphic>
             </Button>
-            <Button alignment="CENTER" layoutX="34.0" layoutY="73.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="180.0" text="Music ">
+            <Button alignment="CENTER" layoutX="33.0" layoutY="29.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="180.0" text="Music ">
                <graphic>
                   <FontAwesomeIconView text="" />
+               </graphic>
+            </Button>
+            <Button layoutX="152.0" layoutY="463.0" mnemonicParsing="false">
+               <graphic>
+                  <FontAwesomeIconView glyphName="PLUS" size="25" />
+               </graphic>
+            </Button>
+            <Button layoutX="197.0" layoutY="463.0" mnemonicParsing="false">
+               <graphic>
+                  <FontAwesomeIconView glyphName="TRASH" size="25" />
                </graphic>
             </Button>
          </children>
@@ -51,16 +61,6 @@
                </font>
             </Label>
             <FontAwesomeIconView glyphName="SEARCH" layoutX="560.0" layoutY="22.0" size="14" text="" wrappingWidth="12.07464599609375" />
-            <Button layoutX="789.0" layoutY="1.0" mnemonicParsing="false">
-               <graphic>
-                  <FontAwesomeIconView glyphName="PLUS" size="25" />
-               </graphic>
-            </Button>
-            <Button layoutX="825.0" layoutY="1.0" mnemonicParsing="false">
-               <graphic>
-                  <FontAwesomeIconView glyphName="TRASH" size="25" />
-               </graphic>
-            </Button>
          </children>
       </Pane>
       <Pane layoutX="237.0" layoutY="74.0" prefHeight="417.0" prefWidth="863.0" style="-fx-background-color: #000;">
