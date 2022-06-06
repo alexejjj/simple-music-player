@@ -135,9 +135,8 @@ public class HelloController implements Initializable {
         }
         rootItem.getChildren().addAll(folderList);
         rootItem.setExpanded(true);
-        //volumeSlider.valueProperty().addListener((ObservableValue<? extends Number> observableValue, Number number, Number t1) -> {
-        //  player.setVolume(volumeSlider.getValue() * 0.01);
-        //});
+        volumeSlider.valueProperty().addListener((ObservableValue<? extends Number> observableValue, Number number, Number t1) -> {player.setVolume(volumeSlider.getValue() * 0.01);
+        });
 
 
     }
@@ -157,32 +156,8 @@ public class HelloController implements Initializable {
     }
 
 
-//    private void bindCurrentTimeLabel(){  //showing the time of a song elapsed
-//        labelCurrentTime.textProperty().bind(Bindings.createStringBinding(new Callable<String>() {
-//            @Override
-//            public String call() throws Exception {
-//                return getTime(player.getCurrentTime());
-//            }
-//        }, player.currentTimeProperty()));
-//    }
-//
-//
-//    public String getTime(Duration time){
-//
-//        int minutes = (int) time.toMinutes();
-//        int seconds = (int) time.toSeconds();
-//
-//        //we don't want to go to 61 seconds, thus this if statement:
-//
-//        if (seconds > 59) seconds %= 60;  //if it's 61, it'll return 1 etc.
-//        if (minutes > 59) minutes %= 60;
-//
-//        return String.format("%02d:%02d", minutes, seconds);
-//
-//    }
-//
     public void playMedia(){
-//        this.beginTimer();
+        this.beginTimer();
         if (player != null && peakedMusic.equals(currentMusic)){
             player.play();
         } else {
@@ -196,26 +171,53 @@ public class HelloController implements Initializable {
 //                cycleTrack();
 //            }
             player.play();
-//
-//            String currentMusicNew = currentMusic.replace("_", " ");
-//
-//
-//            player.totalDurationProperty().addListener(new ChangeListener<Duration>() {
-//                @Override
-//                public void changed(ObservableValue<? extends Duration> observableValue, Duration oldDuration, Duration newDuration) {
-//                    labelTotalTime.setText(getTime(newDuration));
-//                }
-//            });
-//
-//            bindCurrentTimeLabel();
-//
-//
-//            songLabel.setText(currentMusicNew.substring(0,currentMusicNew.length()-13));
+
+            String currentMusicNew = currentMusic.replace("_", " ");
+
+
+            player.totalDurationProperty().addListener(new ChangeListener<Duration>() {
+                @Override
+                public void changed(ObservableValue<? extends Duration> observableValue, Duration oldDuration, Duration newDuration) {
+                    labelTotalTime.setText(getTime(newDuration));
+                }
+            });
+
+            bindCurrentTimeLabel();
+
+
+            songLabel.setText(currentMusicNew.substring(0,currentMusicNew.length()-13));
         }
     }
 
+    private void bindCurrentTimeLabel(){  //showing the time of a song elapsed
+        labelCurrentTime.textProperty().bind(Bindings.createStringBinding(new Callable<String>() {
+            @Override
+            public String call() throws Exception {
+                return getTime(player.getCurrentTime());
+            }
+        }, player.currentTimeProperty()));
+    }
+
+
+    public String getTime(Duration time){
+
+        int minutes = (int) time.toMinutes();
+        int seconds = (int) time.toSeconds();
+
+        //considering the fact that there's only 60 sec/min
+
+        if (seconds > 59) seconds %= 60;  //if it's 61, it'll return 1 etc.
+        if (minutes > 59) minutes %= 60;
+
+        return String.format("%02d:%02d", minutes, seconds);
+
+    }
+
+
+
+
     public void pauseMedia(){
-//        this.cancelTimer();
+        this.cancelTimer();
         player.pause();
     }
 
@@ -229,7 +231,7 @@ public class HelloController implements Initializable {
         }
     }
 
-    public void upadate() {
+    public void update() {
         this.rootPath = currentUsersHomeDir + "\\MusicPlayer\\Music\\";
         rootFolder = rootPath;
         TreeItem<String> rootItem = new TreeItem<>("Music");
@@ -250,7 +252,7 @@ public class HelloController implements Initializable {
         rootItem.getChildren().addAll(folderList);
         rootItem.setExpanded(true);
     }
-    public void upadate(String keyWord) {
+    public void update(String keyWord) {
         this.rootPath = currentUsersHomeDir + "\\MusicPlayer\\Music\\";
         rootFolder = rootPath;
         TreeItem<String> rootItem = new TreeItem<>("Music");
@@ -279,7 +281,7 @@ public class HelloController implements Initializable {
 
     public void search() {
         String searchRequest = textAreaSearch.getText();
-        upadate(searchRequest);
+        update(searchRequest);
     }
 //
 //    public void addFile() {
@@ -293,7 +295,7 @@ public class HelloController implements Initializable {
 //            filePath = f.getPath();
 //        }
 //        moveFile(filePath, rootPath + filePath.substring(filePath.lastIndexOf("\\") + 1));
-//        upadate();
+//        update();
 //    }
 //
 //    public void deleteFile() {
@@ -301,7 +303,7 @@ public class HelloController implements Initializable {
 //        if(file.delete()){
 //            System.out.println(peakedMusic + " file deleted");
 //        }else System.out.println(peakedMusic + " file not found");
-//        upadate();
+//        update();
 //    }
 //
     private static void moveFile(String src, String dest ) {
@@ -318,7 +320,6 @@ public class HelloController implements Initializable {
         Stage stagePlaylist = new Stage();
         stagePlaylist.setScene(secondScene);
         stagePlaylist.show();
-        upadate();
     }
 
     public void importPlaylist() {
@@ -332,32 +333,32 @@ public class HelloController implements Initializable {
             playlistPath = f.getPath();
         }
         moveFile(playlistPath, rootPath + playlistPath.substring(playlistPath.lastIndexOf("\\") + 1));
-        upadate();
+        update();
     }
 
-//    public void beginTimer(){
-//
-//        timer = new Timer();
-//        task = new TimerTask() {
-//
-//            @Override
-//            public void run() {
-//                isPlaying = true;
-//                double current = player.getCurrentTime().toSeconds();
-//                double end = player.getTotalDuration().toSeconds();
-//                songProgressBar.setProgress(current/end);
-//
-//                if(current/end == 1){
-//                    cancelTimer();
-//                }
-//            }
-//        };
-//        timer.scheduleAtFixedRate(task,1000,1000);
-//    }
-//
-//    public void cancelTimer(){
-//        isPlaying = false;
-//    }
+    public void beginTimer(){
+
+        timer = new Timer();
+        task = new TimerTask() {
+
+            @Override
+            public void run() {
+                isPlaying = true;
+                double current = player.getCurrentTime().toSeconds();
+                double end = player.getTotalDuration().toSeconds();
+                songProgressBar.setProgress(current/end);
+
+                if(current/end == 1){
+                    cancelTimer();
+                }
+            }
+        };
+        timer.scheduleAtFixedRate(task,1000,1000);
+    }
+
+    public void cancelTimer(){
+        isPlaying = false;
+    }
 //
 //    public void playPrevious() {
 //        int currentIndex = Arrays.stream(fileList).map(TreeItem::getValue).toList().indexOf(currentMusic);

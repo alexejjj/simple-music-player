@@ -16,5 +16,8 @@ public class secondStageController {
         String playlistName = this.playlistName.getText();
         File newPlaylist = new File(currentUsersHomeDir + "\\MusicPlayer\\Music\\" + playlistName + "\\");
         newPlaylist.mkdir();
+
     }
+
+
 }
