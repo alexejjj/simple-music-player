@@ -318,6 +318,7 @@ public class HelloController implements Initializable {
         Stage stagePlaylist = new Stage();
         stagePlaylist.setScene(secondScene);
         stagePlaylist.show();
+        upadate();
     }
 
     public void importPlaylist() {
