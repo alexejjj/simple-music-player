@@ -81,7 +81,7 @@
                   <Font name="System Italic" size="10.0" />
                </font>
             </Label>
-            <FontAwesomeIconView glyphName="PLAY" layoutX="55.0" layoutY="53.0" size="26" wrappingWidth="14.585784912109375" />
+            <FontAwesomeIconView glyphName="PLAY" layoutX="55.0" layoutY="53.0" onMouseClicked="#playPause" size="26" wrappingWidth="14.585784912109375" />
             <FontAwesomeIconView glyphName="ARROW_LEFT" layoutX="14.0" layoutY="53.0" size="25" text="" />
             <FontAwesomeIconView glyphName="ARROW_RIGHT" layoutX="87.0" layoutY="53.0" size="25" text="" />
             <Label alignment="CENTER" layoutX="207.0" layoutY="25.0" prefHeight="25.0" prefWidth="471.0" text="Stephen Sanchez - Until I Found You" textAlignment="CENTER">

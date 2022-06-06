@@ -58,6 +58,7 @@ public class HelloController implements Initializable {
     int songIndex;
     boolean isCycled;
     String tempRootFolder;
+    String playPath;
 
 
     @FXML
@@ -78,6 +79,7 @@ public class HelloController implements Initializable {
 
     private String rootPath;
     private boolean existResourceFolder = false;
+
 
     String currentUsersHomeDir = System.getProperty("user.home");
 
@@ -104,6 +106,7 @@ public class HelloController implements Initializable {
             mainLibrary.mkdir();
         }
         filePath = currentUsersHomeDir + "\\MusicPlayer\\Music\\";
+        playPath = currentUsersHomeDir + "\\MusicPlayer\\Music\\MainLibrary\\";
 
 //        JFileChooser file = new JFileChooser();
 //        file.setMultiSelectionEnabled(true);
@@ -178,21 +181,21 @@ public class HelloController implements Initializable {
 //
 //    }
 //
-//    public void playMedia(){
+    public void playMedia(){
 //        this.beginTimer();
-//        if (player != null && peakedMusic.equals(currentMusic)){
-//            player.play();
-//        } else {
-//            currentMusic = peakedMusic;
-//            File f = new File(rootFolder + currentMusic);
-//            URI u = f.toURI();
-//            Media pick = new Media(u.toString()); //throws here
-//            player = new MediaPlayer(pick);
+        if (player != null && peakedMusic.equals(currentMusic)){
+            player.play();
+        } else {
+            currentMusic = peakedMusic;
+            File f = new File(playPath + currentMusic);
+            URI u = f.toURI();
+            Media pick = new Media(u.toString()); //throws here
+            player = new MediaPlayer(pick);
 //            if (isCycled) {
 //                isCycled = false;
 //                cycleTrack();
 //            }
-//            player.play();
+            player.play();
 //
 //            String currentMusicNew = currentMusic.replace("_", " ");
 //
@@ -208,23 +211,23 @@ public class HelloController implements Initializable {
 //
 //
 //            songLabel.setText(currentMusicNew.substring(0,currentMusicNew.length()-13));
-//        }
-//    }
-//
-//    public void pauseMedia(){
+        }
+    }
+
+    public void pauseMedia(){
 //        this.cancelTimer();
-//        player.pause();
-//    }
-//
-//    public void playPause() {
-//        if (isPlaying) {
-//            pauseMedia();
-//            isPlaying = false;
-//        } else {
-//            playMedia();
-//            isPlaying = true;
-//        }
-//    }
+        player.pause();
+    }
+
+    public void playPause() {
+        if (isPlaying) {
+            pauseMedia();
+            isPlaying = false;
+        } else {
+            playMedia();
+            isPlaying = true;
+        }
+    }
 //
 //    @FXML
 //    TextField textAreaSearch = new TextField();
