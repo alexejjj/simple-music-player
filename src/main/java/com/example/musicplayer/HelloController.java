@@ -79,6 +79,7 @@ public class HelloController implements Initializable {
 
     private String rootPath;
     private boolean existResourceFolder = false;
+    private Map<TreeItem<String>, String> treeItemToPath = new HashMap<>();
 
 
     String currentUsersHomeDir = System.getProperty("user.home");
@@ -131,6 +132,7 @@ public class HelloController implements Initializable {
             for (int j = 0; j < directoryLister(tempRootFolder).length; j++) {
                 fileList[i][j] = new TreeItem<>(directoryLister(tempRootFolder)[j].getName());
                 folderList[i].getChildren().addAll(fileList[i][j]);
+                treeItemToPath.put(fileList[i][j], directoryLister(tempRootFolder)[j].getPath().substring(filePath.length()));
             }
         }
         rootItem.getChildren().addAll(folderList);
@@ -152,6 +154,7 @@ public class HelloController implements Initializable {
         if(item != null) {
             System.out.println(item.getValue());
             peakedMusic = item.getValue();
+            System.out.println(" PEAKED: " + peakedMusic);
         }
     }
 
