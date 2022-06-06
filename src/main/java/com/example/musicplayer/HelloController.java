@@ -229,16 +229,27 @@ public class HelloController implements Initializable {
 //    @FXML
 //    TextField textAreaSearch = new TextField();
 //
-//    public void upadate() {
-//        TreeItem<String> rootItem = new TreeItem<>("Library");
-//        fileList = new TreeItem[directoryLister(rootFolder).length];
-//        this.treeView.setRoot(rootItem);
-//        for (int i = 0; i < directoryLister(rootFolder).length; i++) {
-//            fileList[i] = new TreeItem<>(directoryLister(rootFolder)[i].getName());
-//            rootItem.getChildren().addAll(fileList[i]);
-//        }
-//        rootItem.setExpanded(true);
-//    }
+    public void upadate() {
+        this.rootPath = currentUsersHomeDir + "\\MusicPlayer\\Music\\";
+        rootFolder = rootPath;
+        TreeItem<String> rootItem = new TreeItem<>("Music");
+        this.treeView.setRoot(rootItem);
+        fileList = new TreeItem[directoryLister(rootFolder).length][];
+        folderList = new TreeItem[directoryLister(rootFolder).length];
+        for (int i = 0; i < directoryLister(rootFolder).length; i++) {
+            folderList[i] = new TreeItem<>(directoryLister(rootFolder)[i].getName());
+            System.out.println(rootFolder + directoryLister(rootFolder)[i].getName() + "\\");
+            System.out.println(folderList[i].toString());
+            tempRootFolder = rootFolder + directoryLister(rootFolder)[i].getName() + "\\";
+            fileList[i] = new TreeItem[directoryLister(tempRootFolder).length];
+            for (int j = 0; j < directoryLister(tempRootFolder).length; j++) {
+                fileList[i][j] = new TreeItem<>(directoryLister(tempRootFolder)[j].getName());
+                folderList[i].getChildren().addAll(fileList[i][j]);
+            }
+        }
+        rootItem.getChildren().addAll(folderList);
+        rootItem.setExpanded(true);
+    }
 //    public void upadate(String keyWord) {
 //        TreeItem<String> rootItem = new TreeItem<>("Library");
 //        fileList = new TreeItem[directoryLister(rootFolder).length];
@@ -279,13 +290,13 @@ public class HelloController implements Initializable {
 //        upadate();
 //    }
 //
-//    private static void moveFile(String src, String dest ) {
-//        Path result = null;
-//        try {
-//            result =  Files.move(Paths.get(src), Paths.get(dest));
-//        } catch (IOException e) {}
-//    }
-//
+    private static void moveFile(String src, String dest ) {
+        Path result = null;
+        try {
+            result =  Files.move(Paths.get(src), Paths.get(dest));
+        } catch (IOException e) {}
+    }
+
 
     public void addPlaylist() throws IOException {
         FXMLLoader fxmlLoader1 = new FXMLLoader(HelloApplication.class.getResource("playlist.fxml"));
@@ -293,6 +304,20 @@ public class HelloController implements Initializable {
         Stage stagePlaylist = new Stage();
         stagePlaylist.setScene(secondScene);
         stagePlaylist.show();
+    }
+
+    public void importPlaylist() {
+        JFileChooser file = new JFileChooser();
+        file.setMultiSelectionEnabled(true);
+        file.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        file.setFileHidingEnabled(false);
+        String playlistPath = null;
+        if (file.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
+            java.io.File f = file.getSelectedFile();
+            playlistPath = f.getPath();
+        }
+        moveFile(playlistPath, rootPath + playlistPath.substring(playlistPath.lastIndexOf("\\") + 1));
+        upadate();
     }
 
 //    public void beginTimer(){
