@@ -228,10 +228,7 @@ public class HelloController implements Initializable {
             isPlaying = true;
         }
     }
-//
-//    @FXML
-//    TextField textAreaSearch = new TextField();
-//
+
     public void upadate() {
         this.rootPath = currentUsersHomeDir + "\\MusicPlayer\\Music\\";
         rootFolder = rootPath;
@@ -253,23 +250,37 @@ public class HelloController implements Initializable {
         rootItem.getChildren().addAll(folderList);
         rootItem.setExpanded(true);
     }
-//    public void upadate(String keyWord) {
-//        TreeItem<String> rootItem = new TreeItem<>("Library");
-//        fileList = new TreeItem[directoryLister(rootFolder).length];
-//        this.treeView.setRoot(rootItem);
-//        for (int i = 0; i < directoryLister(rootFolder).length; i++) {
-//            if (directoryLister(rootFolder)[i].getName().contains(keyWord)) {
-//                fileList[i] = new TreeItem<>(directoryLister(rootFolder)[i].getName());
-//                rootItem.getChildren().addAll(fileList[i]);
-//            }
-//        }
-//        rootItem.setExpanded(true);
-//    }
-//
-//    public void search() {
-//        String searchRequest = textAreaSearch.getText();
-//        upadate(searchRequest);
-//    }
+    public void upadate(String keyWord) {
+        this.rootPath = currentUsersHomeDir + "\\MusicPlayer\\Music\\";
+        rootFolder = rootPath;
+        TreeItem<String> rootItem = new TreeItem<>("Music");
+        this.treeView.setRoot(rootItem);
+        fileList = new TreeItem[directoryLister(rootFolder).length][];
+        folderList = new TreeItem[directoryLister(rootFolder).length];
+        for (int i = 0; i < directoryLister(rootFolder).length; i++) {
+            folderList[i] = new TreeItem<>(directoryLister(rootFolder)[i].getName());
+            System.out.println(rootFolder + directoryLister(rootFolder)[i].getName() + "\\");
+            System.out.println(folderList[i].toString());
+            tempRootFolder = rootFolder + directoryLister(rootFolder)[i].getName() + "\\";
+            fileList[i] = new TreeItem[directoryLister(tempRootFolder).length];
+            for (int j = 0; j < directoryLister(tempRootFolder).length; j++) {
+                if (directoryLister(tempRootFolder)[j].getName().contains(keyWord)) {
+                    fileList[i][j] = new TreeItem<>(directoryLister(tempRootFolder)[j].getName());
+                    folderList[i].getChildren().addAll(fileList[i][j]);
+                }
+            }
+        }
+        rootItem.getChildren().addAll(folderList);
+        rootItem.setExpanded(true);
+    }
+
+    @FXML
+    TextField textAreaSearch = new TextField();
+
+    public void search() {
+        String searchRequest = textAreaSearch.getText();
+        upadate(searchRequest);
+    }
 //
 //    public void addFile() {
 //        String filePath = null;
