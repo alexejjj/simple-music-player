@@ -373,16 +373,16 @@ public class HelloController implements Initializable {
 //        playMedia();
 //    }
 //
-//    public void cycleTrack() {
-//        if (isCycled) {
-//            isCycled = false;
-//            player.cycleCountProperty().set(0);
-//        } else {
-//            player.cycleCountProperty().set(Integer.MAX_VALUE);
-//            isCycled = true;
-//        }
-//    }
-//
+    public void cycleTrack() {
+        if (isCycled) {
+            isCycled = false;
+            player.cycleCountProperty().set(0);
+        } else {
+            player.cycleCountProperty().set(Integer.MAX_VALUE);
+            isCycled = true;
+        }
+    }
+
 //    public void shuffleTrack() {
 //        Random rnd = ThreadLocalRandom.current();
 //        for (int i = fileList.length - 1; i > 0; i--)
