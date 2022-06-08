@@ -202,7 +202,7 @@ public class HelloController implements Initializable {
     }
 
 
-    public String getTime(Duration time){
+    public static String getTime(Duration time){
 
         int minutes = (int) time.toMinutes();
         int seconds = (int) time.toSeconds();
@@ -213,7 +213,6 @@ public class HelloController implements Initializable {
         if (minutes > 59) minutes %= 60;
 
         return String.format("%02d:%02d", minutes, seconds);
-
     }
 
 
