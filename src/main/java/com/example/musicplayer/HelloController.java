@@ -82,6 +82,7 @@ public class HelloController implements Initializable {
     private Map<TreeItem<String>, String> treeItemToPath = new HashMap<>();
 
 
+
     String currentUsersHomeDir = System.getProperty("user.home");
 
     @Override
@@ -242,8 +243,8 @@ public class HelloController implements Initializable {
         folderList = new TreeItem[directoryLister(rootFolder).length];
         for (int i = 0; i < directoryLister(rootFolder).length; i++) {
             folderList[i] = new TreeItem<>(directoryLister(rootFolder)[i].getName());
-            System.out.println(rootFolder + directoryLister(rootFolder)[i].getName() + "\\");
-            System.out.println(folderList[i].toString());
+//            System.out.println(rootFolder + directoryLister(rootFolder)[i].getName() + "\\");
+//            System.out.println(folderList[i].toString());
             tempRootFolder = rootFolder + directoryLister(rootFolder)[i].getName() + "\\";
             fileList[i] = new TreeItem[directoryLister(tempRootFolder).length];
             for (int j = 0; j < directoryLister(tempRootFolder).length; j++) {
@@ -263,8 +264,8 @@ public class HelloController implements Initializable {
         folderList = new TreeItem[directoryLister(rootFolder).length];
         for (int i = 0; i < directoryLister(rootFolder).length; i++) {
             folderList[i] = new TreeItem<>(directoryLister(rootFolder)[i].getName());
-            System.out.println(rootFolder + directoryLister(rootFolder)[i].getName() + "\\");
-            System.out.println(folderList[i].toString());
+//            System.out.println(rootFolder + directoryLister(rootFolder)[i].getName() + "\\");
+//            System.out.println(folderList[i].toString());
             tempRootFolder = rootFolder + directoryLister(rootFolder)[i].getName() + "\\";
             fileList[i] = new TreeItem[directoryLister(tempRootFolder).length];
             for (int j = 0; j < directoryLister(tempRootFolder).length; j++) {
@@ -285,20 +286,20 @@ public class HelloController implements Initializable {
         String searchRequest = textAreaSearch.getText();
         update(searchRequest);
     }
-//
-//    public void addFile() {
-//        String filePath = null;
-//        JFileChooser file = new JFileChooser();
-//        file.setMultiSelectionEnabled(true);
-//        file.setFileSelectionMode(JFileChooser.FILES_ONLY);
-//        file.setFileHidingEnabled(false);
-//        if (file.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
-//            java.io.File f = file.getSelectedFile();
-//            filePath = f.getPath();
-//        }
-//        moveFile(filePath, rootPath + filePath.substring(filePath.lastIndexOf("\\") + 1));
-//        update();
-//    }
+
+    public void addFile() {
+        String filePath = null;
+        JFileChooser file = new JFileChooser();
+        file.setMultiSelectionEnabled(true);
+        file.setFileSelectionMode(JFileChooser.FILES_ONLY);
+        file.setFileHidingEnabled(false);
+        if (file.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
+            java.io.File f = file.getSelectedFile();
+            filePath = f.getPath();
+        }
+        moveFile(filePath, rootPath + "//" + peakedMusic + "//" + filePath.substring(filePath.lastIndexOf("\\") + 1));
+        update();
+    }
 //
 //    public void deleteFile() {
 //        File file = new File(rootPath +peakedMusic);
