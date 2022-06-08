@@ -158,7 +158,7 @@ public class HelloController implements Initializable {
             System.out.println(" PEAKED: " + peakedMusic);
         }
     }
-
+// fix
 
     public void playMedia(){
         this.beginTimer();
