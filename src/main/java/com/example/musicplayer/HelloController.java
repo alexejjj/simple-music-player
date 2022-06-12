@@ -301,14 +301,17 @@ public class HelloController implements Initializable {
         update();
     }
 //
-//    public void deleteFile() {
-//        File file = new File(rootPath +peakedMusic);
-//        if(file.delete()){
-//            System.out.println(peakedMusic + " file deleted");
-//        }else System.out.println(peakedMusic + " file not found");
-//        update();
-//    }
-//
+    public void deleteFile() {
+        for (int i = 0; i < directoryLister(rootFolder).length; i++) {
+            File file = new File( rootPath + directoryLister(rootFolder)[i].getName() + "\\" + peakedMusic + "\\");
+            if (file.delete()) {
+                System.out.println(peakedMusic + " file deleted");
+                break;
+            }
+        }
+        update();
+    }
+
     private static void moveFile(String src, String dest ) {
         Path result = null;
         try {

@@ -40,7 +40,7 @@
             </Button>
             <Button layoutX="191.0" layoutY="463.0" mnemonicParsing="false">
                <graphic>
-                  <FontAwesomeIconView glyphName="TRASH" size="25" />
+                  <FontAwesomeIconView glyphName="TRASH" onContextMenuRequested="#deleteFile" onMouseClicked="#deleteFile" size="25" />
                </graphic>
             </Button>
             <Button layoutX="37.0" layoutY="411.0" mnemonicParsing="false" onContextMenuRequested="#importPlaylist" onMouseClicked="#importPlaylist" prefHeight="26.0" prefWidth="186.0" text="Import my playlist">
