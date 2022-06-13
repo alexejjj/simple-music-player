@@ -13,77 +13,95 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="1100.0" style="-fx-background-color: #000;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.musicplayer.HelloController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="1100.0" style="-fx-background-color: #181818;" stylesheets="@../../../style.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.musicplayer.HelloController">
    <children>
-      <AnchorPane layoutX="-13.0" layoutY="35.0" prefHeight="519.0" prefWidth="249.0" style="-fx-background-color: #696969;">
+      <AnchorPane layoutX="-13.0" layoutY="35.0" prefHeight="519.0" prefWidth="249.0" style="-fx-background-color: #181818;">
          <children>
             <ButtonBar layoutX="-90.0" layoutY="137.0" prefHeight="0.0" prefWidth="205.0" />
-            <Button alignment="CENTER" layoutX="38.0" layoutY="463.0" mnemonicParsing="false" onContextMenuRequested="#addPlaylist" onMouseClicked="#addPlaylist" prefHeight="33.0" prefWidth="98.0" text="add playlist">
+            <Button alignment="CENTER" layoutX="17.0" layoutY="463.0" mnemonicParsing="false" onContextMenuRequested="#addPlaylist" onMouseClicked="#addPlaylist" prefHeight="33.0" prefWidth="112.0" style="-fx-background-color: #5FD3B3;" text="Add playlist">
                <graphic>
                   <FontAwesomeIconView glyphName="LIST" />
                </graphic>
+               <font>
+                  <Font name="Wingdings" size="13.0" />
+               </font>
             </Button>
-            <Button alignment="CENTER" layoutX="32.0" layoutY="79.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="180.0" text="Video">
+            <Button alignment="CENTER" layoutX="32.0" layoutY="79.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="180.0" style="-fx-background-color: #5FD3B3;" text="Video">
                <graphic>
                   <FontAwesomeIconView text="" />
                </graphic>
+               <font>
+                  <Font size="13.0" />
+               </font>
             </Button>
-            <Button alignment="CENTER" layoutX="33.0" layoutY="29.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="180.0" text="Music ">
+            <Button alignment="CENTER" layoutX="33.0" layoutY="29.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="180.0" style="-fx-background-color: #5FD3B3;" text="Music ">
                <graphic>
                   <FontAwesomeIconView text="" />
                </graphic>
+               <font>
+                  <Font name="Wingdings" size="13.0" />
+               </font>
             </Button>
-            <Button layoutX="145.0" layoutY="463.0" mnemonicParsing="false" onContextMenuRequested="#addFile" onMouseClicked="#addFile">
+            <Button layoutX="145.0" layoutY="463.0" mnemonicParsing="false" onContextMenuRequested="#addFile" onMouseClicked="#addFile" style="-fx-background-color: #5FD3B3;">
                <graphic>
-                  <FontAwesomeIconView glyphName="PLUS" size="25" />
+                  <FontAwesomeIconView glyphName="PLUS" size="25">
+                     <font>
+                        <Font size="14.0" />
+                     </font></FontAwesomeIconView>
                </graphic>
             </Button>
-            <Button layoutX="191.0" layoutY="463.0" mnemonicParsing="false">
+            <Button layoutX="191.0" layoutY="463.0" mnemonicParsing="false" style="-fx-background-color: #5FD3B3;">
                <graphic>
                   <FontAwesomeIconView glyphName="TRASH" onContextMenuRequested="#deleteFile" onMouseClicked="#deleteFile" size="25" />
                </graphic>
             </Button>
-            <Button layoutX="133.0" layoutY="421.0" mnemonicParsing="false" onContextMenuRequested="#importPlaylist" onMouseClicked="#importPlaylist" prefHeight="26.0" prefWidth="112.0" text="Import playlist">
+            <Button layoutX="133.0" layoutY="421.0" mnemonicParsing="false" onContextMenuRequested="#importPlaylist" onMouseClicked="#importPlaylist" prefHeight="26.0" prefWidth="112.0" style="-fx-background-color: #5FD3B3;" text="Import playlist">
                <graphic>
                   <FontAwesomeIconView text="" />
                </graphic>
+               <font>
+                  <Font name="Wingdings" size="13.0" />
+               </font>
             </Button>
-            <Button layoutX="15.0" layoutY="421.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="114.0" text="Update playlist">
+            <Button layoutX="17.0" layoutY="421.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="112.0" style="-fx-background-color: #5FD3B3;" text="Update playlist">
                <graphic>
                   <FontAwesomeIconView text="" />
                </graphic>
+               <font>
+                  <Font name="Wingdings" size="13.0" />
+               </font>
             </Button>
          </children>
       </AnchorPane>
-      <Label layoutX="7.0" layoutY="5.0" text="BDC-player" textFill="WHITE">
+      <Label layoutY="4.0" text="BDC-player" textFill="WHITE">
          <font>
             <Font name="System Italic" size="15.0" />
          </font>
       </Label>
-      <Pane layoutX="236.0" layoutY="35.0" prefHeight="34.0" prefWidth="864.0" style="-fx-background-color: #fafafa;">
+      <Pane layoutX="236.0" layoutY="35.0" prefHeight="34.0" prefWidth="864.0" style="-fx-background-color: #181818;">
          <children>
-            <TextField fx:id="textAreaSearch" layoutX="3.0" layoutY="4.0" prefHeight="26.0" prefWidth="371.0" promptText="Search" />
-            <ChoiceBox fx:id="myChoiceBox" layoutX="706.0" layoutY="5.0" prefWidth="150.0" />
+            <TextField fx:id="textAreaSearch" layoutX="3.0" layoutY="9.0" prefHeight="26.0" prefWidth="371.0" promptText="Search" />
+            <ChoiceBox fx:id="myChoiceBox" layoutX="706.0" layoutY="8.0" prefWidth="150.0" />
             <FontAwesomeIconView glyphName="SEARCH" layoutX="356.0" layoutY="22.0" onContextMenuRequested="#search" onMouseClicked="#search" wrappingWidth="12.07464599609375" />
-            <Label layoutX="647.0" layoutY="8.0" prefHeight="18.0" prefWidth="49.0" text="filter by:">
+            <Label layoutX="647.0" layoutY="8.0" prefHeight="18.0" prefWidth="49.0" text="filter by:" textFill="WHITE">
                <font>
-                  <Font name="System Italic" size="14.0" />
+                  <Font name="Wingdings" size="13.0" />
                </font>
             </Label>
-            <FontAwesomeIconView glyphName="SEARCH" layoutX="628.0" layoutY="23.0" size="14" text="" wrappingWidth="12.07464599609375" />
+            <FontAwesomeIconView fill="WHITE" glyphName="SEARCH" layoutX="628.0" layoutY="23.0" size="14" text="" wrappingWidth="12.07464599609375" />
          </children>
       </Pane>
       <Pane layoutX="237.0" layoutY="74.0" prefHeight="417.0" prefWidth="863.0" style="-fx-background-color: #000;">
          <children>
-            <TreeView fx:id="treeView" layoutX="-1.0" layoutY="-6.0" onContextMenuRequested="#selectItem" onMouseClicked="#selectItem" prefHeight="423.0" prefWidth="864.0" />
+            <TreeView fx:id="treeView" layoutY="6.0" onContextMenuRequested="#selectItem" onMouseClicked="#selectItem" prefHeight="423.0" prefWidth="864.0" style="-fx-background-color: #000000;" />
          </children>
       </Pane>
 
-      <Pane layoutX="237.0" layoutY="492.0" prefHeight="63.0" prefWidth="864.0" style="-fx-background-color: #fafafa;">
+      <Pane layoutX="238.0" layoutY="491.0" prefHeight="63.0" prefWidth="863.0" style="-fx-background-color: #ffffff;">
          <children>
             <Label alignment="CENTER" layoutX="208.0" layoutY="13.0" prefHeight="15.0" prefWidth="471.0" text="Now playing:" textAlignment="CENTER">
                <font>
-                  <Font name="System Italic" size="10.0" />
+                  <Font name="Wingdings" size="10.0" />
                </font>
             </Label>
             <FontAwesomeIconView glyphName="PLAY" layoutX="55.0" layoutY="53.0" onMouseClicked="#playPause" size="26" wrappingWidth="14.585784912109375" />
@@ -91,14 +109,14 @@
             <FontAwesomeIconView glyphName="ARROW_RIGHT" layoutX="87.0" layoutY="53.0" onMouseClicked="#playNext" size="25" text="" />
             <Label fx:id="songLabel" alignment="CENTER" layoutX="207.0" layoutY="25.0" prefHeight="25.0" prefWidth="471.0" text="Stephen Sanchez - Until I Found You" textAlignment="CENTER">
                <font>
-                  <Font name="System Italic" size="16.0" />
+                  <Font name="Wingdings" size="16.0" />
                </font>
             </Label>
             <FontAwesomeIconView glyphName="" layoutX="679.0" layoutY="53.0" selectionFill="#8d6c6c" size="25" text="" />
             <FontAwesomeIconView glyphName="REPEAT" layoutX="139.0" layoutY="53.0" onMouseClicked="#shuffleTrack" size="25" text="" />
             <FontAwesomeIconView glyphName="REPEAT" layoutX="175.0" layoutY="52.0" onMouseClicked="#cycleTrack" size="25" text="" />
             <Slider fx:id="volumeSlider" layoutX="710.0" layoutY="37.0" max="100" value="50.0" />
-            <ProgressBar fx:id="songProgressBar" layoutX="1.0" prefHeight="12.0" prefWidth="863.0" progress="0.0" />
+            <ProgressBar fx:id="songProgressBar" layoutX="1.0" prefHeight="12.0" prefWidth="863.0" progress="0.0" style="-fx-background-color: #ffffff;" />
             <Label fx:id="labelCurrentTime" layoutX="12.0" layoutY="11.0" text="00:00" />
             <Label fx:id="labelTotalTime" layoutX="822.0" layoutY="11.0" text="00:00" />
          </children>
