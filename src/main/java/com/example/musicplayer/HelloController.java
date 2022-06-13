@@ -202,11 +202,11 @@ public class HelloController implements Initializable {
         int slash = 0;
         for (int i = 0; i < songName.length(); i++) {
             if (songName.charAt(i) == '\\') {
-                slash = i;
+                slash = i + 1;
                 break;
             }
         }
-        return slash + 1;
+        return slash ;
     }
 
     private void bindCurrentTimeLabel(){  //showing the time of a song elapsed
