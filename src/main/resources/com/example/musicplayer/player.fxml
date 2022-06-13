@@ -71,13 +71,13 @@
                   <Font name="Wingdings" size="13.0" />
                </font>
             </Button>
+           <Label alignment="CENTER" layoutX="74.0" layoutY="-16.0" text="BDC player" textFill="#e1e1e1">
+                           <font>
+                              <Font name="System Bold Italic" size="18.0" />
+                           </font>
+                  </Label>
          </children>
       </AnchorPane>
-     <Label alignment="CENTER" layoutX="77.0" layoutY="-7.0" text="BDC player" textFill="#e1e1e1">
-                     <font>
-                        <Font name="System Bold Italic" size="18.0" />
-                     </font>
-            </Label>
       <Pane layoutX="236.0" layoutY="35.0" prefHeight="34.0" prefWidth="864.0" style="-fx-background-color: #181818;">
          <children>
             <TextField fx:id="textAreaSearch" layoutX="3.0" layoutY="9.0" prefHeight="26.0" prefWidth="371.0" promptText="Search" />
