@@ -305,12 +305,10 @@ public class HelloController implements Initializable {
     }
 //
     public void deleteFile() {
-        for (int i = 0; i < directoryLister(rootFolder).length; i++) {
-            File file = new File( rootPath + directoryLister(rootFolder)[i].getName() + "\\" + peakedMusic + "\\");
-            if (file.delete()) {
-                System.out.println(peakedMusic + " file deleted");
-                break;
-            }
+        currentMusic = peakedMusic;
+        File file = new File( playPath + currentMusic + "\\");
+        if (file.delete()) {
+            System.out.println(peakedMusic + " file deleted");
         }
         update();
     }
