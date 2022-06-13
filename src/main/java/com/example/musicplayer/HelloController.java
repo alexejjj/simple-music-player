@@ -194,9 +194,19 @@ public class HelloController implements Initializable {
 
             bindCurrentTimeLabel();
 
-
-            songLabel.setText(currentMusicNew.substring(0,currentMusicNew.length()-13));
+            songLabel.setText(currentMusicNew.substring(slashSubstring(currentMusicNew),currentMusicNew.length()-13));
         }
+    }
+
+    public static int slashSubstring (String songName){
+        int slash = 0;
+        for (int i = 0; i < songName.length(); i++) {
+            if (songName.charAt(i) == '\\') {
+                slash = i;
+                break;
+            }
+        }
+        return slash + 1;
     }
 
     private void bindCurrentTimeLabel(){  //showing the time of a song elapsed
