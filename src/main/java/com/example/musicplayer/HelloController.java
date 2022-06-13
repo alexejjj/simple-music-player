@@ -52,13 +52,14 @@ public class HelloController implements Initializable {
     TreeItem<String>[][] fileList;
     TreeItem<String>[] folderList;
     private String currentMusic;
-    MediaPlayer player;
+    private MediaPlayer player;
     private boolean isPlaying;
     private String peakedMusic;
-    int songIndex;
-    boolean isCycled;
-    String tempRootFolder;
-    String playPath;
+    private int songIndex;
+    private boolean isCycled;
+    private boolean isShuffled;
+    private String tempRootFolder;
+    private String playPath;
 
 
     @FXML
@@ -79,7 +80,7 @@ public class HelloController implements Initializable {
 
     private String rootPath;
     private boolean existResourceFolder = false;
-    private Map<TreeItem<String>, String> treeItemToPath = new HashMap<>();
+    private Map<TreeItem<String>, String> treeItemToPath = new LinkedHashMap<>();
 
 
 
@@ -108,7 +109,7 @@ public class HelloController implements Initializable {
             mainLibrary.mkdir();
         }
         filePath = currentUsersHomeDir + "\\MusicPlayer\\Music\\";
-        playPath = currentUsersHomeDir + "\\MusicPlayer\\Music\\MainLibrary\\";
+        playPath = currentUsersHomeDir + "\\MusicPlayer\\Music\\";
 
 //        JFileChooser file = new JFileChooser();
 //        file.setMultiSelectionEnabled(true);
@@ -153,9 +154,12 @@ public class HelloController implements Initializable {
     public void selectItem() {
         TreeItem<String> item = treeView.getSelectionModel().getSelectedItem();
         if(item != null) {
+            System.out.println(treeItemToPath);
             System.out.println(item.getValue());
-            peakedMusic = item.getValue();
+            System.out.println(item);
+            peakedMusic = treeItemToPath.get(item);
             System.out.println(" PEAKED: " + peakedMusic);
+            System.out.println(treeItemToPath);
         }
     }
 // fix
@@ -168,12 +172,14 @@ public class HelloController implements Initializable {
             currentMusic = peakedMusic;
             File f = new File(playPath + currentMusic);
             URI u = f.toURI();
+            System.out.println(f);
+            System.out.println(u);
             Media pick = new Media(u.toString()); //throws here
             player = new MediaPlayer(pick);
-//            if (isCycled) {
-//                isCycled = false;
-//                cycleTrack();
-//            }
+            if (isCycled) {
+                isCycled = false;
+                cycleTrack();
+            }
             player.play();
 
             String currentMusicNew = currentMusic.replace("_", " ");
@@ -215,9 +221,6 @@ public class HelloController implements Initializable {
 
         return String.format("%02d:%02d", minutes, seconds);
     }
-
-
-
 
     public void pauseMedia(){
         this.cancelTimer();
@@ -365,33 +368,44 @@ public class HelloController implements Initializable {
     public void cancelTimer(){
         isPlaying = false;
     }
-//
-//    public void playPrevious() {
-//        int currentIndex = Arrays.stream(fileList).map(TreeItem::getValue).toList().indexOf(currentMusic);
-//        if (currentIndex < 1) {
-//            pauseMedia();
-//            player.seek(new Duration(0.0));
-//            playMedia();
-//            return;
-//        }
-//        peakedMusic = fileList[currentIndex - 1].getValue();
-//        pauseMedia();
-//        playMedia();
-//    }
-//
-//    public void playNext() {
-//        int currentIndex = Arrays.stream(fileList).map(TreeItem::getValue).toList().indexOf(currentMusic);
-//        if (currentIndex == fileList.length - 1) {
-//            pauseMedia();
-//            player.seek(new Duration(0.0));
-//            playMedia();
-//            return;
-//        }
-//        peakedMusic = fileList[currentIndex + 1].getValue();
-//        pauseMedia();
-//        playMedia();
-//    }
-//
+
+        public void playPrevious() {
+        List<String> playlistTracks = getPlaylistItemsPaths(peakedMusic);
+        int currentIndex = playlistTracks.indexOf(peakedMusic);
+        if (currentIndex != 0) {
+            peakedMusic = playlistTracks.get(currentIndex - 1);
+        }
+        pauseMedia();
+        playMedia();
+    }
+
+    public List<String> getPlaylistItemsPaths(String musicName) {
+        int musicNameStartWithIndex = musicName.lastIndexOf('\\');
+        String playlistTitlePath = musicName.substring(0, musicNameStartWithIndex);
+        List<String> playListItemsPaths = treeItemToPath.values()
+                .stream().sequential()
+                .filter(i -> i.contains(playlistTitlePath))
+                .toList();
+
+        playListItemsPaths = new ArrayList<>(playListItemsPaths);
+
+        if (isShuffled) {
+            Collections.shuffle(playListItemsPaths);
+        }
+
+        return playListItemsPaths;
+    }
+
+    public void playNext() {
+        List<String> playlistTracks = getPlaylistItemsPaths(peakedMusic);
+        int currentIndex = playlistTracks.indexOf(peakedMusic);
+        if (currentIndex != playlistTracks.size() - 1) {
+            peakedMusic = playlistTracks.get(currentIndex + 1);
+        }
+        pauseMedia();
+        playMedia();
+    }
+
     public void cycleTrack() {
         if (isCycled) {
             isCycled = false;
@@ -402,20 +416,9 @@ public class HelloController implements Initializable {
         }
     }
 
-//    public void shuffleTrack() {
-//        Random rnd = ThreadLocalRandom.current();
-//        for (int i = fileList.length - 1; i > 0; i--)
-//        {
-//            int index = rnd.nextInt(i + 1);
-//            TreeItem<String> a = fileList[index];
-//            fileList[index] = fileList[i];
-//            fileList[i] = a;
-//        }
-//        List<TreeItem<String>> tracksList = treeView.getRoot().getChildren();
-//        for(int i = 0; i < tracksList.size(); i++) {
-//            tracksList.set(i, fileList[i]);
-//        }
-//    }
+    public void shuffleTrack() {
+        isShuffled = !isShuffled;
+    }
 
 // choosing another song while the current one is playing will lead to the one playing getting stopped.
 // You should then therefore click on the song the second time.
