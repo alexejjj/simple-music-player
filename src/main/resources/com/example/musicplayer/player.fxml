@@ -48,7 +48,7 @@
                   <FontAwesomeIconView text="" />
                </graphic>
             </Button>
-            <Button layoutX="15.0" layoutY="421.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="114.0" text="Update playlist">
+            <Button layoutX="15.0" layoutY="421.0" mnemonicParsing="false" onContextMenuRequested="#update" onMouseClicked="#update" prefHeight="26.0" prefWidth="114.0" text="Update list">
                <graphic>
                   <FontAwesomeIconView text="" />
                </graphic>
