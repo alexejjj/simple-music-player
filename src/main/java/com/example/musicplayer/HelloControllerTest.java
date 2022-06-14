@@ -13,14 +13,11 @@ public class HelloControllerTest {
     @Before
     public void setUp() throws Exception {
         System.out.println("Before HelloControllerTest.class");
-        //control = new HelloController();
-        //control.initialize(null, null);
     }
 
     @After
     public void tearDown() throws Exception {
         System.out.println("After HelloControllerTest.class");
-        //control = null;
     }
 
     @Test
@@ -29,21 +26,36 @@ public class HelloControllerTest {
 
     @Test
     public void selectItem() {
+//        String pMusic = HelloController.selectItem();
+//        assertEquals(pMusic, "MainLibrary");
     }
 
     @Test
     public void playMedia() {
-
     }
 
     @Test
-    public void getTime() throws Exception{
+    public void slashSubstringWithoutSlash() {
+        int slashResult = HelloController.slashSubstring("Stephen Sanches - Until i found you");
+        assertEquals(0, slashResult);
+    }
+
+    @Test
+    public void slashSubstringWithSlash() {
+        int slashResult = HelloController.slashSubstring("Stephen Sanches\\Until i found you");
+        assertEquals(16, slashResult);
+    }
+
+    @Test
+    public void getTime() throws Exception {
         String result = HelloController.getTime(new Duration(342000.0));
         assertEquals(result, "05:42");
     }
 
     @Test
     public void pauseMedia() {
+//        controller.pauseMedia();
+//        assertEquals(controller.isPlaying, false);
     }
 
     @Test

@@ -83,9 +83,13 @@ public class HelloController implements Initializable {
     private Map<TreeItem<String>, String> treeItemToPath = new LinkedHashMap<>();
 
 
-
     String currentUsersHomeDir = System.getProperty("user.home");
 
+    /**
+     * Метод для запуска программы
+     * @param url
+     * @param resourceBundle
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         //addFile = new Button();
@@ -96,8 +100,8 @@ public class HelloController implements Initializable {
         System.out.println(currentUsersHomeDir);
         for (int i = 0; i < directoryLister(currentUsersHomeDir).length; i++) {
             if (directoryLister(currentUsersHomeDir)[i].equals("MusicPlayer")) {
-                 existResourceFolder = true;
-                 break;
+                existResourceFolder = true;
+                break;
             }
         }
         if (!existResourceFolder) {
@@ -139,7 +143,8 @@ public class HelloController implements Initializable {
         }
         rootItem.getChildren().addAll(folderList);
         rootItem.setExpanded(true);
-        volumeSlider.valueProperty().addListener((ObservableValue<? extends Number> observableValue, Number number, Number t1) -> {player.setVolume(volumeSlider.getValue() * 0.01);
+        volumeSlider.valueProperty().addListener((ObservableValue<? extends Number> observableValue, Number number, Number t1) -> {
+            player.setVolume(volumeSlider.getValue() * 0.01);
         });
 
 
@@ -151,9 +156,12 @@ public class HelloController implements Initializable {
         return fileList;
     }
 
+    /**
+     *Метод для выбора трека
+     */
     public void selectItem() {
         TreeItem<String> item = treeView.getSelectionModel().getSelectedItem();
-        if(item != null) {
+        if (item != null) {
             System.out.println(treeItemToPath);
             System.out.println(item.getValue());
             System.out.println(item);
@@ -164,9 +172,12 @@ public class HelloController implements Initializable {
     }
 // fix
 
-    public void playMedia(){
+    /**
+     *Метод для запуска трека
+     */
+    public void playMedia() {
         this.beginTimer();
-        if (player != null && peakedMusic.equals(currentMusic)){
+        if (player != null && peakedMusic.equals(currentMusic)) {
             player.play();
         } else {
             currentMusic = peakedMusic;
@@ -194,11 +205,16 @@ public class HelloController implements Initializable {
 
             bindCurrentTimeLabel();
 
-            songLabel.setText(currentMusicNew.substring(slashSubstring(currentMusicNew),currentMusicNew.length()-13));
+            songLabel.setText(currentMusicNew.substring(slashSubstring(currentMusicNew), currentMusicNew.length() - 13));
         }
     }
 
-    public static int slashSubstring (String songName){
+    /**
+     *Метод, который возвращает место первого слэша в названии песни
+     * @param songName название трека
+     * @return место первого слэша в названии
+     */
+    public static int slashSubstring(String songName) {
         int slash = 0;
         for (int i = 0; i < songName.length(); i++) {
             if (songName.charAt(i) == '\\') {
@@ -206,10 +222,11 @@ public class HelloController implements Initializable {
                 break;
             }
         }
-        return slash ;
+        return slash;
     }
 
-    private void bindCurrentTimeLabel(){  //showing the time of a song elapsed
+
+    private void bindCurrentTimeLabel() {  //showing the time of a song elapsed
         labelCurrentTime.textProperty().bind(Bindings.createStringBinding(new Callable<String>() {
             @Override
             public String call() throws Exception {
@@ -219,7 +236,12 @@ public class HelloController implements Initializable {
     }
 
 
-    public static String getTime(Duration time){
+    /**
+     * Метод, который возвращает отформатированное время
+     * @param time время, которое надо перевести в строку
+     * @return отформатированную строку
+     */
+    public static String getTime(Duration time) {
 
         int minutes = (int) time.toMinutes();
         int seconds = (int) time.toSeconds();
@@ -232,11 +254,17 @@ public class HelloController implements Initializable {
         return String.format("%02d:%02d", minutes, seconds);
     }
 
-    public void pauseMedia(){
+    /**
+     *Метод для остновки проигрывания трека
+     */
+    public void pauseMedia() {
         this.cancelTimer();
         player.pause();
     }
 
+    /**
+     *Метод для кнопки играть/стоп
+     */
     public void playPause() {
         if (isPlaying) {
             pauseMedia();
@@ -247,6 +275,9 @@ public class HelloController implements Initializable {
         }
     }
 
+    /**
+     *Метод для обновления музыкальной базы
+     */
     public void update() {
         this.rootPath = currentUsersHomeDir + "\\MusicPlayer\\Music\\";
         rootFolder = rootPath;
@@ -268,6 +299,11 @@ public class HelloController implements Initializable {
         rootItem.getChildren().addAll(folderList);
         rootItem.setExpanded(true);
     }
+
+    /**
+     * Метод для обновления музыкальной базы по фильтру
+     * @param keyWord ключевое слово
+     */
     public void update(String keyWord) {
         this.rootPath = currentUsersHomeDir + "\\MusicPlayer\\Music\\";
         rootFolder = rootPath;
@@ -295,11 +331,17 @@ public class HelloController implements Initializable {
     @FXML
     TextField textAreaSearch = new TextField();
 
+    /**
+     *Метод для поиска
+     */
     public void search() {
         String searchRequest = textAreaSearch.getText();
         update(searchRequest);
     }
 
+    /**
+     *Метод для добавления файла
+     */
     public void addFile() {
         String filePath = null;
         JFileChooser file = new JFileChooser();
@@ -313,24 +355,31 @@ public class HelloController implements Initializable {
         moveFile(filePath, rootPath + "//" + peakedMusic + "//" + filePath.substring(filePath.lastIndexOf("\\") + 1));
         update();
     }
-//
+
+    /**
+     *Метод для удаления файла
+     */
     public void deleteFile() {
         currentMusic = peakedMusic;
-        File file = new File( playPath + currentMusic + "\\");
+        File file = new File(playPath + currentMusic + "\\");
         if (file.delete()) {
             System.out.println(peakedMusic + " file deleted");
         }
         update();
     }
 
-    private static void moveFile(String src, String dest ) {
+    private static void moveFile(String src, String dest) {
         Path result = null;
         try {
-            result =  Files.move(Paths.get(src), Paths.get(dest));
-        } catch (IOException e) {}
+            result = Files.move(Paths.get(src), Paths.get(dest));
+        } catch (IOException e) {
+        }
     }
 
-
+    /**
+     * Метод для добавления плейлиста
+     * @throws IOException
+     */
     public void addPlaylist() throws IOException {
         FXMLLoader fxmlLoader1 = new FXMLLoader(HelloApplication.class.getResource("playlist.fxml"));
         Scene secondScene = new Scene(fxmlLoader1.load());
@@ -339,6 +388,9 @@ public class HelloController implements Initializable {
         stagePlaylist.show();
     }
 
+    /**
+     *Метод для импорта плейлиста
+     */
     public void importPlaylist() {
         JFileChooser file = new JFileChooser();
         file.setMultiSelectionEnabled(true);
@@ -353,7 +405,11 @@ public class HelloController implements Initializable {
         update();
     }
 
-    public void beginTimer(){
+
+    /**
+     *Метод для начала таймера
+     */
+    public void beginTimer() {
 
         timer = new Timer();
         task = new TimerTask() {
@@ -363,21 +419,27 @@ public class HelloController implements Initializable {
                 isPlaying = true;
                 double current = player.getCurrentTime().toSeconds();
                 double end = player.getTotalDuration().toSeconds();
-                songProgressBar.setProgress(current/end);
+                songProgressBar.setProgress(current / end);
 
-                if(current/end == 1){
+                if (current / end == 1) {
                     cancelTimer();
                 }
             }
         };
-        timer.scheduleAtFixedRate(task,1000,1000);
+        timer.scheduleAtFixedRate(task, 1000, 1000);
     }
 
-    public void cancelTimer(){
+    /**
+     *Метод для остановки таймера
+     */
+    public void cancelTimer() {
         isPlaying = false;
     }
 
-        public void playPrevious() {
+    /**
+     *Метод для проигрывания предыдущего трека
+     */
+    public void playPrevious() {
         List<String> playlistTracks = getPlaylistItemsPaths(peakedMusic);
         int currentIndex = playlistTracks.indexOf(peakedMusic);
         if (currentIndex != 0) {
@@ -387,6 +449,11 @@ public class HelloController implements Initializable {
         playMedia();
     }
 
+    /**
+     *Метод для получения пути плейлиста
+     * @param musicName название файла
+     * @return путь плейлиста
+     */
     public List<String> getPlaylistItemsPaths(String musicName) {
         int musicNameStartWithIndex = musicName.lastIndexOf('\\');
         String playlistTitlePath = musicName.substring(0, musicNameStartWithIndex);
@@ -404,6 +471,10 @@ public class HelloController implements Initializable {
         return playListItemsPaths;
     }
 
+
+    /**
+     *Метод для проигрывания следующего трека
+     */
     public void playNext() {
         List<String> playlistTracks = getPlaylistItemsPaths(peakedMusic);
         int currentIndex = playlistTracks.indexOf(peakedMusic);
@@ -414,6 +485,9 @@ public class HelloController implements Initializable {
         playMedia();
     }
 
+    /**
+     *Метод для зацикливания трека
+     */
     public void cycleTrack() {
         if (isCycled) {
             isCycled = false;
@@ -424,6 +498,9 @@ public class HelloController implements Initializable {
         }
     }
 
+    /**
+     *Метод для перемешивания треков
+     */
     public void shuffleTrack() {
         isShuffled = !isShuffled;
     }
