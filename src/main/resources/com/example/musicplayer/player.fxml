@@ -71,13 +71,13 @@
                   <Font name="Wingdings" size="13.0" />
                </font>
             </Button>
+           <Label alignment="CENTER" layoutX="74.0" layoutY="-16.0" text="BDC player" textFill="#e1e1e1">
+                           <font>
+                              <Font name="System Bold Italic" size="18.0" />
+                           </font>
+                  </Label>
          </children>
       </AnchorPane>
-      <Label layoutY="4.0" text="BDC-player" textFill="WHITE">
-         <font>
-            <Font name="System Italic" size="15.0" />
-         </font>
-      </Label>
       <Pane layoutX="236.0" layoutY="35.0" prefHeight="34.0" prefWidth="864.0" style="-fx-background-color: #181818;">
          <children>
             <TextField fx:id="textAreaSearch" layoutX="3.0" layoutY="9.0" prefHeight="26.0" prefWidth="371.0" promptText="Search" />
@@ -107,7 +107,7 @@
             <FontAwesomeIconView glyphName="PLAY" layoutX="55.0" layoutY="53.0" onMouseClicked="#playPause" size="26" wrappingWidth="14.585784912109375" />
             <FontAwesomeIconView glyphName="ARROW_LEFT" layoutX="14.0" layoutY="53.0" onMouseClicked="#playPrevious" size="25" text="" />
             <FontAwesomeIconView glyphName="ARROW_RIGHT" layoutX="87.0" layoutY="53.0" onMouseClicked="#playNext" size="25" text="" />
-            <Label fx:id="songLabel" alignment="CENTER" layoutX="207.0" layoutY="25.0" prefHeight="25.0" prefWidth="471.0" text="Stephen Sanchez - Until I Found You" textAlignment="CENTER">
+            <Label fx:id="songLabel" alignment="CENTER" layoutX="207.0" layoutY="25.0" prefHeight="25.0" prefWidth="471.0" text="SYML - Where's My Love" textAlignment="CENTER">
                <font>
                   <Font name="Wingdings" size="16.0" />
                </font>
