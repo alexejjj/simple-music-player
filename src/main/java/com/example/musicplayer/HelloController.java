@@ -2,6 +2,8 @@ package com.example.musicplayer;
 
 import javafx.beans.binding.Bindings;
 
+import java.awt.event.MouseEvent;
+import java.beans.EventHandler;
 import java.util.concurrent.ThreadLocalRandom;
 
 import javafx.beans.value.ChangeListener;
@@ -146,9 +148,8 @@ public class HelloController implements Initializable {
         volumeSlider.valueProperty().addListener((ObservableValue<? extends Number> observableValue, Number number, Number t1) -> {
             player.setVolume(volumeSlider.getValue() * 0.01);
         });
-
-
     }
+
 
     private File[] directoryLister(String root) {
         File rootDir = new File(root);
@@ -437,7 +438,7 @@ public class HelloController implements Initializable {
     }
 
     /**
-     *Метод для проигрывания предыдущего трека
+     * Метод для проигрывания предыдущего трека
      */
     public void playPrevious() {
         List<String> playlistTracks = getPlaylistItemsPaths(peakedMusic);
@@ -450,7 +451,7 @@ public class HelloController implements Initializable {
     }
 
     /**
-     *Метод для получения пути плейлиста
+     * Метод для получения пути плейлиста
      * @param musicName название файла
      * @return путь плейлиста
      */
@@ -473,7 +474,7 @@ public class HelloController implements Initializable {
 
 
     /**
-     *Метод для проигрывания следующего трека
+     * Метод для проигрывания следующего трека
      */
     public void playNext() {
         List<String> playlistTracks = getPlaylistItemsPaths(peakedMusic);
@@ -486,7 +487,7 @@ public class HelloController implements Initializable {
     }
 
     /**
-     *Метод для зацикливания трека
+     * Метод для зацикливания трека
      */
     public void cycleTrack() {
         if (isCycled) {
@@ -499,7 +500,7 @@ public class HelloController implements Initializable {
     }
 
     /**
-     *Метод для перемешивания треков
+     * Метод для перемешивания треков
      */
     public void shuffleTrack() {
         isShuffled = !isShuffled;
