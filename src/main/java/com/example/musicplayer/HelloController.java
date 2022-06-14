@@ -211,8 +211,8 @@ public class HelloController implements Initializable {
 
     /**
      *Метод, который возвращает место первого слэша в названии песни
-     * @param songName
-     * @return
+     * @param songName название трека
+     * @return место первого слэша в названии
      */
     public static int slashSubstring(String songName) {
         int slash = 0;
@@ -302,7 +302,7 @@ public class HelloController implements Initializable {
 
     /**
      * Метод для обновления музыкальной базы по фильтру
-     * @param keyWord
+     * @param keyWord ключевое слово
      */
     public void update(String keyWord) {
         this.rootPath = currentUsersHomeDir + "\\MusicPlayer\\Music\\";
@@ -340,7 +340,7 @@ public class HelloController implements Initializable {
     }
 
     /**
-     *
+     *Метод для добавления файла
      */
     public void addFile() {
         String filePath = null;
@@ -357,7 +357,7 @@ public class HelloController implements Initializable {
     }
 
     /**
-     *
+     *Метод для удаления файла
      */
     public void deleteFile() {
         currentMusic = peakedMusic;
@@ -377,6 +377,7 @@ public class HelloController implements Initializable {
     }
 
     /**
+     * Метод для добавления плейлиста
      * @throws IOException
      */
     public void addPlaylist() throws IOException {
@@ -388,7 +389,7 @@ public class HelloController implements Initializable {
     }
 
     /**
-     *
+     *Метод для импорта плейлиста
      */
     public void importPlaylist() {
         JFileChooser file = new JFileChooser();
@@ -406,7 +407,7 @@ public class HelloController implements Initializable {
 
 
     /**
-     *
+     *Метод для начала таймера
      */
     public void beginTimer() {
 
@@ -429,14 +430,14 @@ public class HelloController implements Initializable {
     }
 
     /**
-     *
+     *Метод для остановки таймера
      */
     public void cancelTimer() {
         isPlaying = false;
     }
 
     /**
-     *
+     *Метод для проигрывания предыдущего трека
      */
     public void playPrevious() {
         List<String> playlistTracks = getPlaylistItemsPaths(peakedMusic);
@@ -449,9 +450,9 @@ public class HelloController implements Initializable {
     }
 
     /**
-     *
-     * @param musicName
-     * @return
+     *Метод для получения пути плейлиста
+     * @param musicName название файла
+     * @return путь плейлиста
      */
     public List<String> getPlaylistItemsPaths(String musicName) {
         int musicNameStartWithIndex = musicName.lastIndexOf('\\');
@@ -472,7 +473,7 @@ public class HelloController implements Initializable {
 
 
     /**
-     *
+     *Метод для проигрывания следующего трека
      */
     public void playNext() {
         List<String> playlistTracks = getPlaylistItemsPaths(peakedMusic);
@@ -485,7 +486,7 @@ public class HelloController implements Initializable {
     }
 
     /**
-     *
+     *Метод для зацикливания трека
      */
     public void cycleTrack() {
         if (isCycled) {
@@ -498,7 +499,7 @@ public class HelloController implements Initializable {
     }
 
     /**
-     *
+     *Метод для перемешивания треков
      */
     public void shuffleTrack() {
         isShuffled = !isShuffled;
